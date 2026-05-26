@@ -128,13 +128,13 @@ Target: user bisa register, login, logout, refresh token, dan akses endpoint ses
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Role otomatis `CUSTOMER`
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Status akun otomatis `ACTIVE`
 
-- [ ] **BE-11 [MVP] Register teknisi**
-  - Endpoint: `POST /api/auth/register/teknisi`
-  - [ ] Simpan data user dengan role `TEKNISI`
-  - [ ] Buat otomatis data `teknisi_profile`
-  - [ ] Status ketersediaan default `OFFLINE`
-  - [ ] Rating default 0
-  - [ ] Total pekerjaan default 0
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) **BE-11 [MVP] Register teknisi**
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Endpoint: `POST /api/auth/register/teknisi`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Simpan data user dengan role `TEKNISI`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Buat otomatis data `teknisi_profile`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Status ketersediaan default `OFFLINE`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Rating default 0
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Total pekerjaan default 0
 
 - [ ] **BE-12 [MVP] Login**
   - Endpoint: `POST /api/auth/login`
