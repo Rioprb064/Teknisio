@@ -40,10 +40,10 @@ public class PermintaanLayanan {
     @JoinColumn(name = "id_layanan", nullable = false)
     private JenisLayanan layanan;
 
-    @Column(name = "latitude", nullable = false, precision = 10, scale = 7)
+    @Column(name = "latitude", precision = 10, scale = 7)
     private BigDecimal latitude;
 
-    @Column(name = "longitude", nullable = false, precision = 10, scale = 7)
+    @Column(name = "longitude", precision = 10, scale = 7)
     private BigDecimal longitude;
 
     @Column(name = "alamat", nullable = false, columnDefinition = "TEXT")

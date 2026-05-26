@@ -12,20 +12,18 @@ import java.util.UUID;
 public interface PermintaanLayananRepository extends JpaRepository<PermintaanLayanan, UUID> {
     Optional<PermintaanLayanan> findByKodePermintaan(String kodePermintaan);
 
-    List<PermintaanLayanan> findByPengguna_IdUserOrderByCreatedAtDesc(UUID idUser);
-    List<PermintaanLayanan> findByPengguna_IdUserAndStatusOrderByCreatedAtDesc(
+    List<PermintaanLayanan> findByPengguna_IdUserOrderByWaktuPermintaanDesc(UUID idUser);
+
+    List<PermintaanLayanan> findByPengguna_IdUserAndStatusOrderByWaktuPermintaanDesc(
         UUID idUser,
-        RequestStatus status
-    );
+        RequestStatus status);
 
-    List<PermintaanLayanan> findByTeknisiProfile_IdTeknisiProfileOrderByCreatedAtDesc(
-        UUID idTeknisiProfile
-    );
+    List<PermintaanLayanan> findByTeknisiProfile_IdTeknisiProfileOrderByWaktuPermintaanDesc(
+        UUID idTeknisiProfile);
 
-    List<PermintaanLayanan> findByTeknisiProfile_IdTeknisiProfileAndStatusOrderByCreatedAtDesc(
+    List<PermintaanLayanan> findByTeknisiProfile_IdTeknisiProfileAndStatusOrderByWaktuPermintaanDesc(
         UUID idTeknisiProfile,
-        RequestStatus status
-    );
+        RequestStatus status);
 
-    List<PermintaanLayanan> findByStatusOrderByCreatedAtDesc(RequestStatus status);
+    List<PermintaanLayanan> findByStatusOrderByWaktuPermintaanDesc(RequestStatus status);
 }
