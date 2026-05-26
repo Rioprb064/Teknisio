@@ -26,14 +26,14 @@ Target: backend punya struktur rapi, response seragam, error handling, repositor
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Response sukses punya `success`, `message`, `data`
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Response error punya `success`, `message`, `errors`
 
-- [ ] **BE-02 [MVP] Buat global exception handler**
-  - [ ] Buat `GlobalExceptionHandler`
-  - [ ] Handle validation error
-  - [ ] Handle not found
-  - [ ] Handle bad request
-  - [ ] Handle unauthorized
-  - [ ] Handle forbidden
-  - [ ] Handle internal server error
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) **BE-02 [MVP] Buat global exception handler**
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Buat `GlobalExceptionHandler`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Handle validation error
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Handle not found
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Handle bad request
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Handle unauthorized
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Handle forbidden
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Handle internal server error
 
 - [ ] **BE-03 [MVP] Siapkan DTO validation**
   - [ ] Tambahkan dependency validation jika belum ada
