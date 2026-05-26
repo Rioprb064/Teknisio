@@ -3,6 +3,8 @@ package com.teknisio.model.entities;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.teknisio.model.enums.RequestStatus;
@@ -56,7 +58,8 @@ public class PermintaanLayanan {
     private String deskripsiMasalah;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
+    @Column(name = "status", nullable = false, columnDefinition = "request_status")
     @Builder.Default
     private RequestStatus status = RequestStatus.WAITING;
 

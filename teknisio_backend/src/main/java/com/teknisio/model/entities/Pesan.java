@@ -3,6 +3,8 @@ package com.teknisio.model.entities;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import com.teknisio.model.enums.PesanType;
 
@@ -38,7 +40,8 @@ public class Pesan {
     private String fileUrl;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "tipe_pesan", nullable = false)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
+    @Column(name = "tipe_pesan", nullable = false, columnDefinition = "pesan_type")
     private PesanType tipePesan;
 
     @CreationTimestamp

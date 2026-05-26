@@ -118,15 +118,15 @@ Target: customer bisa menampilkan kategori dan jenis layanan.
 
 Target: user bisa register, login, logout, refresh token, dan akses endpoint sesuai role.
 
-- [ ] **BE-10 [MVP] Register customer**
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) **BE-10 [MVP] Register customer**
   - Endpoint: `POST /api/auth/register/customer`
-  - [ ] Validasi nama wajib
-  - [ ] Validasi email wajib dan unik
-  - [ ] Validasi nomor telepon wajib dan unik
-  - [ ] Validasi password minimal
-  - [ ] Simpan password dalam bentuk hash
-  - [ ] Role otomatis `CUSTOMER`
-  - [ ] Status akun otomatis `ACTIVE`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Validasi nama wajib
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Validasi email wajib dan unik
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Validasi nomor telepon wajib dan unik
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Validasi password minimal
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Simpan password dalam bentuk hash
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Role otomatis `CUSTOMER`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Status akun otomatis `ACTIVE`
 
 - [ ] **BE-11 [MVP] Register teknisi**
   - Endpoint: `POST /api/auth/register/teknisi`
