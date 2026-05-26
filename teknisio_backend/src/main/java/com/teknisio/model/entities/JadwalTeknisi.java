@@ -3,6 +3,8 @@ package com.teknisio.model.entities;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.teknisio.model.enums.HariEnum;
@@ -29,7 +31,8 @@ public class JadwalTeknisi {
     private TeknisiProfile teknisiProfile;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "hari", nullable = false)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
+    @Column(name = "hari", nullable = false, columnDefinition = "hari_enum")
     private HariEnum hari;
 
     @Column(name = "jam_mulai", nullable = false)

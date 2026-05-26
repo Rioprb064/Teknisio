@@ -3,6 +3,8 @@ package com.teknisio.model.entities;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import com.teknisio.model.enums.NotificationReferenceType;
 
@@ -40,7 +42,8 @@ public class Notifikasi {
     private String tipe;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "reference_type")
+    @JdbcType(PostgreSQLEnumJdbcType.class)
+    @Column(name = "reference_type", columnDefinition = "notification_reference_type")
     private NotificationReferenceType referenceType;
 
     @CreationTimestamp
