@@ -43,28 +43,28 @@ Target: backend punya struktur rapi, response seragam, error handling, repositor
   - [ ] Gunakan `@Size`
   - [ ] Gunakan `@Pattern` jika perlu
 
-- [ ] **BE-04 [MVP] Buat repository untuk entity inti**
-  - [ ] `UserRepository`
-  - [ ] `UserSessionRepository`
-  - [ ] `TeknisiProfileRepository`
-  - [ ] `KategoriLayananRepository`
-  - [ ] `JenisLayananRepository`
-  - [ ] `TeknisiLayananRepository`
-  - [ ] `JadwalTeknisiRepository`
-  - [ ] `PermintaanLayananRepository`
-  - [ ] `MediaPermintaanRepository`
-  - [ ] `PesanRepository`
-  - [ ] `NotifikasiRepository`
-  - [ ] `RiwayatStatusRepository`
-  - [ ] `ReviewRepository`
-  - [ ] `LogAktivitasRepository`
+- [finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) **BE-04 [MVP] Buat repository untuk entity inti**
+  - [finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `UserRepository`
+  - [finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `UserSessionRepository`
+  - [finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `TeknisiProfileRepository`
+  - [finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `KategoriLayananRepository`
+  - [finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `JenisLayananRepository`
+  - [finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `TeknisiLayananRepository`
+  - [finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `JadwalTeknisiRepository`
+  - [finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `PermintaanLayananRepository`
+  - [finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `MediaPermintaanRepository`
+  - [finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `PesanRepository`
+  - [finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `NotifikasiRepository`
+  - [finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `RiwayatStatusRepository`
+  - [finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `ReviewRepository`
+  - [finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `LogAktivitasRepository`
 
-- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) **BE-05 [MVP] Validasi koneksi database dan Flyway**
-  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `./gradlew clean build` sukses
-  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `./gradlew bootRun` sukses
-  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Tabel terbentuk otomatis
-  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `/actuator/health` status `UP`
-  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Tidak ada error migration
+- [finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) **BE-05 [MVP] Validasi koneksi database dan Flyway**
+  - [finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `./gradlew clean build` sukses
+  - [finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `./gradlew bootRun` sukses
+  - [finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Tabel terbentuk otomatis
+  - [finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `/actuator/health` status `UP`
+  - [finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Tidak ada error migration
 
 ---
 
