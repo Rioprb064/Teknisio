@@ -148,11 +148,7 @@ File:
 Isi:
 
 ```env
-POSTGRES_DB=teknisio_db
-POSTGRES_USER=teknisio_user
-POSTGRES_PASSWORD=teknisio_pass
-POSTGRES_PORT=5432
-SERVER_PORT=8080
+This is secret brother
 ```
 
 Catatan:
@@ -593,11 +589,7 @@ docker compose up -d
 Kalau belum ada `.env.example`, buat manual file `.env` dengan isi:
 
 ```env
-POSTGRES_DB=teknisio_db
-POSTGRES_USER=teknisio_user
-POSTGRES_PASSWORD=teknisio_pass
-POSTGRES_PORT=5432
-SERVER_PORT=8080
+This is secret brother
 ```
 
 ---
