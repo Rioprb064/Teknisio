@@ -70,7 +70,7 @@ Target: backend punya struktur rapi, response seragam, error handling, repositor
 
 ## 1. Master Data Layanan
 
-Target: mobile customer bisa menampilkan kategori dan jenis layanan.
+Target: customer bisa menampilkan kategori dan jenis layanan.
 
 - [ ] **BE-20 [MVP] List kategori layanan aktif**
   - Endpoint: `GET /api/kategori-layanan`
