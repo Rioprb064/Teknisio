@@ -35,13 +35,13 @@ Target: backend punya struktur rapi, response seragam, error handling, repositor
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Handle forbidden
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Handle internal server error
 
-- [ ] **BE-03 [MVP] Siapkan DTO validation**
-  - [ ] Tambahkan dependency validation jika belum ada
-  - [ ] Gunakan `@NotBlank`
-  - [ ] Gunakan `@NotNull`
-  - [ ] Gunakan `@Email`
-  - [ ] Gunakan `@Size`
-  - [ ] Gunakan `@Pattern` jika perlu
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square)  **BE-03 [MVP] Siapkan DTO validation**
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square)  Tambahkan dependency validation jika belum ada
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square)  Gunakan `@NotBlank`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square)  Gunakan `@NotNull`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square)  Gunakan `@Email`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square)  Gunakan `@Size`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square)  Gunakan `@Pattern` jika perlu
 
 - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) **BE-04 [MVP] Buat repository untuk entity inti**
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `UserRepository`
