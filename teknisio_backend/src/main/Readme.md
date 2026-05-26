@@ -21,10 +21,10 @@ Target: backend punya struktur rapi, response seragam, error handling, repositor
     - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Buat package `exception`
     - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Buat package `util`
 
-- [ ] **BE-01 [MVP] Buat global response format**
-  - [ ] Buat `ApiResponse<T>`
-  - [ ] Response sukses punya `success`, `message`, `data`
-  - [ ] Response error punya `success`, `message`, `errors`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) **BE-01 [MVP] Buat global response format**
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Buat `ApiResponse<T>`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Response sukses punya `success`, `message`, `data`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Response error punya `success`, `message`, `errors`
 
 - [ ] **BE-02 [MVP] Buat global exception handler**
   - [ ] Buat `GlobalExceptionHandler`
