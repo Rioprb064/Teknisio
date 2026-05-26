@@ -3,6 +3,8 @@ package com.teknisio.model.entities;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import com.teknisio.model.enums.RequestStatus;
 
@@ -32,11 +34,13 @@ public class RiwayatStatus {
     private User diubahOleh;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status_sebelum")
+    @JdbcType(PostgreSQLEnumJdbcType.class)
+    @Column(name = "status_sebelum", columnDefinition = "request_status")
     private RequestStatus statusSebelum;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status_sesudah", nullable = false)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
+    @Column(name = "status_sesudah", nullable = false, columnDefinition = "request_status")
     private RequestStatus statusSesudah;
 
     @Column(name = "catatan", columnDefinition = "TEXT")

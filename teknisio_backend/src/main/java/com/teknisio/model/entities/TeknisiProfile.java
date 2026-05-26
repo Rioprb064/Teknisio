@@ -3,6 +3,8 @@ package com.teknisio.model.entities;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.teknisio.model.enums.TeknisiStatus;
@@ -30,7 +32,8 @@ public class TeknisiProfile {
     private User user;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status_ketersediaan", nullable = false)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
+    @Column(name = "status_ketersediaan", nullable = false, columnDefinition = "teknisi_status")
     @Builder.Default
     private TeknisiStatus statusKetersediaan = TeknisiStatus.OFFLINE;
 
