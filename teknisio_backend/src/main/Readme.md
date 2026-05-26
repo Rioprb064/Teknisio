@@ -7,19 +7,19 @@ Roadmap pengerjaan backend pbo
 
 Target: backend punya struktur rapi, response seragam, error handling, repository, dan siap dikembangkan per modul.
 
-- [ ] **BE-00 [MVP] Rapikan struktur package**
-  - [ ] Buat package `common`
-  - [ ] Buat package `auth`
-  - [ ] Buat package `users`
-  - [ ] Buat package `layanan`
-  - [ ] Buat package `teknisi`
-  - [ ] Buat package `jadwal`
-  - [ ] Buat package `permintaan`
-  - [ ] Buat package `chat`
-  - [ ] Buat package `notifikasi`
-  - [ ] Buat package `review`
-  - [ ] Buat package `config`
-  - [ ] Buat package `security`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) **BE-00 [MVP] Rapikan struktur package**
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Buat package `config`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Buat package `model`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Buat package `repositories`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Buat package `dto`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Buat package `services`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Buat package `controllers`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Buat package `security`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Buat package `websocket`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Buat package `common`
+    - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Buat package `response`
+    - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Buat package `exception`
+    - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Buat package `util`
 
 - [ ] **BE-01 [MVP] Buat global response format**
   - [ ] Buat `ApiResponse<T>`
