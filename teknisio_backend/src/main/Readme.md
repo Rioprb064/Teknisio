@@ -136,15 +136,13 @@ Target: user bisa register, login, logout, refresh token, dan akses endpoint ses
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Rating default 0
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Total pekerjaan default 0
 
-- [ ] **BE-12 [MVP] Login**
-  - Endpoint: `POST /api/auth/login`
-  - [ ] Validasi email ada
-  - [ ] Validasi password cocok
-  - [ ] Validasi akun aktif
-  - [ ] Generate access token
-  - [ ] Generate refresh token
-  - [ ] Simpan hash refresh token ke `user_session`
-  - [ ] Update `last_login`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) **BE-12 [MVP] Login**
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Endpoint: `POST /api/auth/login`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Login pakai email dan password
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Cek password dengan BCrypt
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Cek status akun `ACTIVE`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Generate JWT access token
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return token dan data user
 
 - [ ] **BE-13 [MVP] Get current user**
   - Endpoint: `GET /api/auth/me`
