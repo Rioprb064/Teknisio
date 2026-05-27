@@ -12,6 +12,7 @@ public record CustomerAuthProfileResponse(
   String noTelepon,
   String alamat,
   UserRole role,
-  UserStatus statusAkun
+  UserStatus statusAkun,
+  String fotoProfil
 )
 implements AuthProfileResponse {}

@@ -181,14 +181,14 @@ Target: user bisa register, login, logout, refresh token, dan akses endpoint ses
 
 Target: customer dan teknisi bisa melihat serta mengubah profil dasar.
 
-- [ ] **BE-30 [MVP] Lihat profil sendiri**
-  - Endpoint: `GET /api/users/me`
-  - [ ] Return nama
-  - [ ] Return email
-  - [ ] Return nomor telepon
-  - [ ] Return foto profil
-  - [ ] Return alamat
-  - [ ] Return role
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) **BE-30 [MVP] Lihat profil sendiri**
+  - Endpoint: `GET /api/auth/profile`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return nama
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return email
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return nomor telepon
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return foto profil
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return alamat
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return role
 
 - [ ] **BE-31 [MVP] Update profil sendiri**
   - Endpoint: `PUT /api/users/me`
