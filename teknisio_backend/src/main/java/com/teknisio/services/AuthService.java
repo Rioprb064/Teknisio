@@ -3,9 +3,12 @@ package com.teknisio.services;
 import com.teknisio.dto.requests.LoginRequest;
 import com.teknisio.dto.requests.RegisterCustomerRequest;
 import com.teknisio.dto.requests.RegisterTeknisiRequest;
+import com.teknisio.dto.responses.AuthProfileResponse;
+import com.teknisio.dto.responses.CustomerAuthProfileResponse;
 import com.teknisio.dto.responses.LoginResponse;
 import com.teknisio.dto.responses.RegisterCustomerResponse;
 import com.teknisio.dto.responses.RegisterTeknisiResponse;
+import com.teknisio.dto.responses.TeknisiAuthProfileResponse;
 import com.teknisio.model.entities.TeknisiProfile;
 import com.teknisio.model.entities.User;
 import com.teknisio.model.enums.TeknisiStatus;
@@ -151,6 +154,56 @@ public class AuthService {
       user.getNama(),
       user.getEmail(),
       user.getNoTelepon(),
+      user.getRole(),
+      user.getStatusAkun()
+    );
+  }
+
+  @Transactional(readOnly = true)
+  public AuthProfileResponse profile(User authenticatedUser) {
+    User user = userRepository.findByIdUserAndDeletedAtIsNull(authenticatedUser.getIdUser())
+      .orElseThrow(() -> new ResponseStatusException(
+        HttpStatus.UNAUTHORIZED,
+        "User tidak valid"
+      ));
+
+    if (user.getStatusAkun() != UserStatus.ACTIVE) {
+      throw new ResponseStatusException(
+        HttpStatus.FORBIDDEN,
+        "Akun tidak aktif"
+      );
+    }
+
+    if (user.getRole() == UserRole.TEKNISI) {
+      TeknisiProfile profile = teknisiProfileRepository.findByUser_IdUser(user.getIdUser())
+        .orElseThrow(() -> new ResponseStatusException(
+          HttpStatus.INTERNAL_SERVER_ERROR,
+          "Profil teknisi tidak ditemukan"
+        ));
+
+      return new TeknisiAuthProfileResponse(
+        user.getIdUser(),
+        profile.getIdTeknisiProfile(),
+        user.getNama(),
+        user.getEmail(),
+        user.getNoTelepon(),
+        user.getAlamat(),
+        user.getRole(),
+        user.getStatusAkun(),
+        profile.getStatusKetersediaan(),
+        profile.getRatingAvg(),
+        profile.getRatingCount(),
+        profile.getTotalPekerjaan(),
+        profile.getDeskripsi()
+      );
+    }
+
+    return new CustomerAuthProfileResponse(
+      user.getIdUser(),
+      user.getNama(),
+      user.getEmail(),
+      user.getNoTelepon(),
+      user.getAlamat(),
       user.getRole(),
       user.getStatusAkun()
     );

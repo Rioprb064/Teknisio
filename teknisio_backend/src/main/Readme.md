@@ -144,11 +144,12 @@ Target: user bisa register, login, logout, refresh token, dan akses endpoint ses
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Generate JWT access token
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return token dan data user
 
-- [ ] **BE-13 [MVP] Get current user**
-  - Endpoint: `GET /api/auth/me`
-  - [ ] Ambil user dari token
-  - [ ] Return data profil dasar
-  - [ ] Return role user
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) **BE-13 [MVP] JWT authentication**
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Endpoint `GET /api/auth/profile`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Buat JWT validation
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Buat JWT filter
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Ambil user dari token
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Endpoint selain register/login wajib pakai token
 
 - [ ] **BE-14 [NEXT] Refresh token**
   - Endpoint: `POST /api/auth/refresh`
