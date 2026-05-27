@@ -2,15 +2,12 @@ services:
   postgres:
     image: postgres:16
     container_name: teknisio-postgres
-    restart: unless-stopped
-    env_file:
-      - .env
     environment:
-      POSTGRES_DB: ${POSTGRES_DB}:teknisio_db
-      POSTGRES_USER: ${POSTGRES_USER}:teknisio_user
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-teknisio_db}
+      POSTGRES_USER: ${POSTGRES_USER:-teknisio_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-teknisio_password}
     ports:
-      - "${POSTGRES_PORT}:5432"
+      - "${POSTGRES_PORT:-5433}:5432"
     volumes:
       - teknisio_postgres_data:/var/lib/postgresql/data
 

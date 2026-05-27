@@ -487,7 +487,7 @@ Setelah database berjalan, jalankan backend:
 Jika menggunakan Windows:
 
 ```bash
-gradlew.bat bootRun
+.\gradlew.bat bootRun
 ```
 
 Jika berhasil, akan muncul log seperti:
