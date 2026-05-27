@@ -1,0 +1,13 @@
+EMAIL="admin@example.com"
+PHONE="08$(date +%s)"
+PASSWD="1234567890"
+
+curl -i -X POST http://localhost:8080/api/auth/register/customer \
+  -H "Content-Type: application/json" \
+  -d "{
+    \"nama\": \"Admin\",
+    \"email\": \"$EMAIL\",
+    \"noTelepon\": \"$PHONE\",
+    \"password\": \"$PASSWD\",
+    \"alamat\": \"Planet Matahari\"
+  }"
