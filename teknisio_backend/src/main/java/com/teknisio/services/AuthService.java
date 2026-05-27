@@ -1,7 +1,9 @@
 package com.teknisio.services;
 
+import com.teknisio.dto.requests.LoginRequest;
 import com.teknisio.dto.requests.RegisterCustomerRequest;
 import com.teknisio.dto.requests.RegisterTeknisiRequest;
+import com.teknisio.dto.responses.LoginResponse;
 import com.teknisio.dto.responses.RegisterCustomerResponse;
 import com.teknisio.dto.responses.RegisterTeknisiResponse;
 import com.teknisio.model.entities.TeknisiProfile;
@@ -11,6 +13,7 @@ import com.teknisio.model.enums.UserRole;
 import com.teknisio.model.enums.UserStatus;
 import com.teknisio.repositories.TeknisiProfileRepository;
 import com.teknisio.repositories.UserRepository;
+import com.teknisio.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +30,7 @@ public class AuthService {
   private final UserRepository userRepository;
   private final TeknisiProfileRepository teknisiProfileRepository;
   private final PasswordEncoder passwordEncoder;
+  private final JwtService jwtService;
 
   @Transactional
   public RegisterCustomerResponse registerCustomer(RegisterCustomerRequest request) {
@@ -44,8 +49,7 @@ public class AuthService {
       .alamat(alamat)
       .role(UserRole.CUSTOMER)
       .statusAkun(UserStatus.ACTIVE)
-      .build()
-    ;
+      .build();
 
     User savedUser = userRepository.save(user);
 
@@ -78,8 +82,7 @@ public class AuthService {
       .alamat(alamat)
       .role(UserRole.TEKNISI)
       .statusAkun(UserStatus.ACTIVE)
-      .build()
-    ;
+      .build();
 
     User savedUser = userRepository.save(user);
 
@@ -90,8 +93,7 @@ public class AuthService {
       .ratingCount(0)
       .totalPekerjaan(0)
       .deskripsi(deskripsi)
-      .build()
-    ;
+      .build();
 
     TeknisiProfile savedProfile = teknisiProfileRepository.save(teknisiProfile);
 
@@ -109,6 +111,48 @@ public class AuthService {
       savedProfile.getRatingCount(),
       savedProfile.getTotalPekerjaan(),
       savedProfile.getDeskripsi()
+    );
+  }
+
+  @Transactional
+  public LoginResponse login(LoginRequest request) {
+    String email = normalizeEmail(request.email());
+
+    User user = userRepository.findByEmailIgnoreCaseAndDeletedAtIsNull(email)
+      .orElseThrow(() -> new ResponseStatusException(
+        HttpStatus.UNAUTHORIZED,
+        "Email atau password salah"
+      ));
+
+    if (!passwordEncoder.matches(request.password(), user.getPasswordHash())) {
+      throw new ResponseStatusException(
+        HttpStatus.UNAUTHORIZED,
+        "Email atau password salah"
+      );
+    }
+
+    if (user.getStatusAkun() != UserStatus.ACTIVE) {
+      throw new ResponseStatusException(
+        HttpStatus.FORBIDDEN,
+        "Akun tidak aktif"
+      );
+    }
+
+    user.setLastLogin(OffsetDateTime.now());
+    userRepository.save(user);
+
+    String accessToken = jwtService.generateAccessToken(user);
+
+    return new LoginResponse(
+      accessToken,
+      "Bearer",
+      jwtService.getExpirationMs(),
+      user.getIdUser(),
+      user.getNama(),
+      user.getEmail(),
+      user.getNoTelepon(),
+      user.getRole(),
+      user.getStatusAkun()
     );
   }
 

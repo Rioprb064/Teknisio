@@ -1,7 +1,9 @@
 package com.teknisio.controllers;
 
+import com.teknisio.dto.requests.LoginRequest;
 import com.teknisio.dto.requests.RegisterCustomerRequest;
 import com.teknisio.dto.requests.RegisterTeknisiRequest;
+import com.teknisio.dto.responses.LoginResponse;
 import com.teknisio.dto.responses.RegisterCustomerResponse;
 import com.teknisio.dto.responses.RegisterTeknisiResponse;
 import com.teknisio.services.AuthService;
@@ -27,5 +29,11 @@ public class AuthController {
   public ResponseEntity<RegisterTeknisiResponse> registerTeknisi(@Valid @RequestBody RegisterTeknisiRequest request) {
     RegisterTeknisiResponse response = authService.registerTeknisi(request);
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
+  }
+
+  @PostMapping("/login")
+  public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
+    LoginResponse response = authService.login(request);
+    return ResponseEntity.ok(response);
   }
 }

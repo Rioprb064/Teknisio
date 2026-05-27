@@ -26,6 +26,7 @@ public class SecurityConfig {
       .authorizeHttpRequests(auth -> auth
         .requestMatchers(HttpMethod.POST, "/api/auth/register/customer").permitAll()
         .requestMatchers(HttpMethod.POST, "/api/auth/register/teknisi").permitAll()
+        .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
         .requestMatchers("/actuator/health").permitAll()
         .anyRequest().permitAll())
       .build();
