@@ -194,7 +194,8 @@ public class AuthService {
         profile.getRatingAvg(),
         profile.getRatingCount(),
         profile.getTotalPekerjaan(),
-        profile.getDeskripsi()
+        profile.getDeskripsi(),
+        user.getFotoProfil()
       );
     }
 
@@ -205,7 +206,8 @@ public class AuthService {
       user.getNoTelepon(),
       user.getAlamat(),
       user.getRole(),
-      user.getStatusAkun()
+      user.getStatusAkun(),
+      user.getFotoProfil()
     );
   }
 
