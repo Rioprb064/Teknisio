@@ -9,6 +9,8 @@ import com.teknisio.dto.responses.LoginResponse;
 import com.teknisio.dto.responses.RefreshTokenResponse;
 import com.teknisio.dto.responses.RegisterCustomerResponse;
 import com.teknisio.dto.responses.RegisterTeknisiResponse;
+import com.teknisio.dto.requests.LogoutRequest;
+import com.teknisio.dto.responses.LogoutResponse;
 import com.teknisio.model.entities.User;
 import com.teknisio.services.AuthService;
 import jakarta.validation.Valid;
@@ -40,6 +42,12 @@ public class AuthController {
   @PostMapping("/login")
   public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
     LoginResponse response = authService.login(request);
+    return ResponseEntity.ok(response);
+  }
+
+  @PostMapping("/logout")
+  public ResponseEntity<LogoutResponse> logout(@Valid @RequestBody LogoutRequest request) {
+    LogoutResponse response = authService.logout(request);
     return ResponseEntity.ok(response);
   }
 
