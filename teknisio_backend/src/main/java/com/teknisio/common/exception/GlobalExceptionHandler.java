@@ -11,6 +11,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -18,6 +19,19 @@ import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+  @ExceptionHandler(ResponseStatusException.class)
+  public ResponseEntity<ApiResponse<Void>> handleResponseStatusException(ResponseStatusException exception) {
+    String message = exception.getReason() != null
+      ? exception.getReason()
+      : "Request tidak valid"
+    ;
+
+    return ResponseEntity
+      .status(exception.getStatusCode())
+      .body(ApiResponse.error(message))
+    ;
+  }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public ResponseEntity<ApiResponse<Void>> handleValidationError(MethodArgumentNotValidException exception) {
@@ -28,11 +42,15 @@ public class GlobalExceptionHandler {
     }
 
     exception.getBindingResult().getGlobalErrors()
-      .forEach(error -> errors.putIfAbsent(error.getObjectName(), error.getDefaultMessage()));
+      .forEach(error -> errors.putIfAbsent(
+        error.getObjectName(), error.getDefaultMessage()
+      ))
+    ;
 
     return ResponseEntity
       .status(HttpStatus.BAD_REQUEST)
-      .body(ApiResponse.error("Validasi gagal", errors));
+      .body(ApiResponse.error("Validasi gagal", errors))
+    ;
   }
 
   @ExceptionHandler(ConstraintViolationException.class)
@@ -40,50 +58,67 @@ public class GlobalExceptionHandler {
     Map<String, String> errors = exception.getConstraintViolations()
       .stream()
       .collect(Collectors.toMap(
-        violation -> getPropertyName(violation),
+        this::getPropertyName,
         ConstraintViolation::getMessage,
         (first, second) -> first,
-        LinkedHashMap::new)
-      );
+        LinkedHashMap::new
+      ))
+    ;
 
     return ResponseEntity
       .status(HttpStatus.BAD_REQUEST)
-      .body(ApiResponse.error("Validasi gagal", errors));
+      .body(ApiResponse.error("Validasi gagal", errors))
+    ;
   }
 
   @ExceptionHandler(ResourceNotFoundException.class)
   public ResponseEntity<ApiResponse<Void>> handleNotFound(ResourceNotFoundException exception) {
     return ResponseEntity
       .status(HttpStatus.NOT_FOUND)
-      .body(ApiResponse.error(exception.getMessage()));
+      .body(ApiResponse.error(exception.getMessage()))
+    ;
   }
 
   @ExceptionHandler(BadRequestException.class)
   public ResponseEntity<ApiResponse<Void>> handleBadRequest(BadRequestException exception) {
     return ResponseEntity
       .status(HttpStatus.BAD_REQUEST)
-      .body(ApiResponse.error(exception.getMessage()));
+      .body(ApiResponse.error(exception.getMessage()))
+    ;
   }
 
-  @ExceptionHandler({UnauthorizedException.class,AuthenticationException.class})
+  @ExceptionHandler({UnauthorizedException.class, AuthenticationException.class})
   public ResponseEntity<ApiResponse<Void>> handleUnauthorized(Exception exception) {
+    String message = exception.getMessage() != null
+      ? exception.getMessage()
+      : "Unauthorized"
+    ;
+
     return ResponseEntity
       .status(HttpStatus.UNAUTHORIZED)
-      .body(ApiResponse.error(exception.getMessage()));
+      .body(ApiResponse.error(message))
+    ;
   }
 
-  @ExceptionHandler({ForbiddenException.class,AccessDeniedException.class})
+  @ExceptionHandler({ForbiddenException.class, AccessDeniedException.class})
   public ResponseEntity<ApiResponse<Void>> handleForbidden(Exception exception) {
+    String message = exception.getMessage() != null
+      ? exception.getMessage()
+      : "Forbidden"
+    ;
+
     return ResponseEntity
       .status(HttpStatus.FORBIDDEN)
-      .body(ApiResponse.error(exception.getMessage()));
+      .body(ApiResponse.error(message))
+    ;
   }
 
   @ExceptionHandler(Exception.class)
   public ResponseEntity<ApiResponse<Void>> handleInternalServerError(Exception exception) {
     return ResponseEntity
       .status(HttpStatus.INTERNAL_SERVER_ERROR)
-      .body(ApiResponse.error("Terjadi kesalahan pada server"));
+      .body(ApiResponse.error("Terjadi kesalahan pada server"))
+    ;
   }
 
   private String getPropertyName(ConstraintViolation<?> violation) {
