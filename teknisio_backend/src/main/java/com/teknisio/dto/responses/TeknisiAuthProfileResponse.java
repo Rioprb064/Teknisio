@@ -20,6 +20,7 @@ public record TeknisiAuthProfileResponse(
   BigDecimal ratingAvg,
   Integer ratingCount,
   Integer totalPekerjaan,
-  String deskripsi
+  String deskripsi,
+  String fotoProfil
 )
 implements AuthProfileResponse {}
