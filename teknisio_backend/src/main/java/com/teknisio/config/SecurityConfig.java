@@ -17,7 +17,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
-
   private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
   @Bean
@@ -38,16 +37,38 @@ public class SecurityConfig {
         .authenticationEntryPoint((request, response, authException) -> {
           response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
           response.setContentType("application/json");
-          response.getWriter().write("{\"message\":\"Unauthorized\"}");
+          response.getWriter().write(
+            "{\"success\":false,\"message\":\"Unauthorized\",\"errors\":{}}"
+          );
+        })
+        .accessDeniedHandler((request, response, accessDeniedException) -> {
+          response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+          response.setContentType("application/json");
+          response.getWriter().write(
+            "{\"success\":false,\"message\":\"Forbidden\",\"errors\":{}}"
+          );
         })
       )
       .authorizeHttpRequests(auth -> auth
+        // Public auth endpoints
         .requestMatchers(HttpMethod.POST, "/api/auth/register/customer").permitAll()
         .requestMatchers(HttpMethod.POST, "/api/auth/register/teknisi").permitAll()
         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
         .requestMatchers(HttpMethod.POST, "/api/auth/refresh").permitAll()
-        .requestMatchers(HttpMethod.POST, "/api/auth/logout").permitAll()
+
+        // Public endpoints jika diperlukan
+        .requestMatchers("/api/public/**").permitAll()
         .requestMatchers("/actuator/health").permitAll()
+
+        // Authenticated profile
+        .requestMatchers(HttpMethod.GET, "/api/auth/profile").authenticated()
+
+        // Role-based endpoints
+        .requestMatchers("/api/customer/**").hasRole("CUSTOMER")
+        .requestMatchers("/api/teknisi/**").hasRole("TEKNISI")
+        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
+        // Default: endpoint lain wajib login
         .anyRequest().authenticated()
       )
       .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
