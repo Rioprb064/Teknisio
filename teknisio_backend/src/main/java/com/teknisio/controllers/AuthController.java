@@ -1,10 +1,12 @@
 package com.teknisio.controllers;
 
 import com.teknisio.dto.requests.LoginRequest;
+import com.teknisio.dto.requests.RefreshTokenRequest;
 import com.teknisio.dto.requests.RegisterCustomerRequest;
 import com.teknisio.dto.requests.RegisterTeknisiRequest;
 import com.teknisio.dto.responses.AuthProfileResponse;
 import com.teknisio.dto.responses.LoginResponse;
+import com.teknisio.dto.responses.RefreshTokenResponse;
 import com.teknisio.dto.responses.RegisterCustomerResponse;
 import com.teknisio.dto.responses.RegisterTeknisiResponse;
 import com.teknisio.model.entities.User;
@@ -38,6 +40,12 @@ public class AuthController {
   @PostMapping("/login")
   public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
     LoginResponse response = authService.login(request);
+    return ResponseEntity.ok(response);
+  }
+
+  @PostMapping("/refresh")
+  public ResponseEntity<RefreshTokenResponse> refresh(@Valid @RequestBody RefreshTokenRequest request) {
+    RefreshTokenResponse response = authService.refresh(request);
     return ResponseEntity.ok(response);
   }
 

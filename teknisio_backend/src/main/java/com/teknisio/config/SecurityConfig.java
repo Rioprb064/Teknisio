@@ -17,6 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
+
   private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
   @Bean
@@ -44,6 +45,7 @@ public class SecurityConfig {
         .requestMatchers(HttpMethod.POST, "/api/auth/register/customer").permitAll()
         .requestMatchers(HttpMethod.POST, "/api/auth/register/teknisi").permitAll()
         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+        .requestMatchers(HttpMethod.POST, "/api/auth/refresh").permitAll()
         .requestMatchers("/actuator/health").permitAll()
         .anyRequest().authenticated()
       )

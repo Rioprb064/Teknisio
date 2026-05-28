@@ -1,0 +1,5 @@
+TOKEN="xMJtbgI9UbL-VJPA-bG6JS4DEKrc4ub0A-KWvHHd4X8_gUMnTBKXsOOtWrhY9nLn15qi15w62uteDrcJfzohIA"
+
+curl -i -X POST http://localhost:8080/api/auth/refresh \
+  -H "Content-Type: application/json" \
+  -d "{\"refreshToken\":\"$TOKEN\"}"

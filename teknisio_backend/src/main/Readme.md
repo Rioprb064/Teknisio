@@ -151,12 +151,12 @@ Target: user bisa register, login, logout, refresh token, dan akses endpoint ses
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Ambil user dari token
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Endpoint selain register/login wajib pakai token
 
-- [ ] **BE-14 [NEXT] Refresh token**
-  - Endpoint: `POST /api/auth/refresh`
-  - [ ] Validasi refresh token
-  - [ ] Validasi session belum expired
-  - [ ] Validasi session belum revoked
-  - [ ] Generate access token baru
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) **BE-14 [NEXT] Refresh token**
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Endpoint: `POST /api/auth/refresh`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Validasi refresh token
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Validasi session belum expired
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Validasi session belum revoked
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Generate access token baru
 
 - [ ] **BE-15 [MVP] Logout**
   - Endpoint: `POST /api/auth/logout`
