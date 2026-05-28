@@ -11,6 +11,8 @@ import com.teknisio.dto.responses.RefreshTokenResponse;
 import com.teknisio.dto.responses.RegisterCustomerResponse;
 import com.teknisio.dto.responses.RegisterTeknisiResponse;
 import com.teknisio.dto.responses.TeknisiAuthProfileResponse;
+import com.teknisio.dto.requests.LogoutRequest;
+import com.teknisio.dto.responses.LogoutResponse;
 import com.teknisio.model.entities.TeknisiProfile;
 import com.teknisio.model.entities.User;
 import com.teknisio.model.entities.UserSession;
@@ -41,7 +43,6 @@ import java.util.Base64;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-
   private final UserRepository userRepository;
   private final TeknisiProfileRepository teknisiProfileRepository;
   private final UserSessionRepository userSessionRepository;
@@ -286,6 +287,23 @@ public class AuthService {
       user.getStatusAkun(),
       user.getFotoProfil()
     );
+  }
+
+  @Transactional
+  public LogoutResponse logout(LogoutRequest request) {
+    String refreshToken = request.refreshToken().trim();
+    String refreshTokenHash = hashRefreshToken(refreshToken);
+
+    UserSession session = userSessionRepository.findByRefreshTokenHashAndRevokedAtIsNull(refreshTokenHash)
+      .orElseThrow(() -> new ResponseStatusException(
+        HttpStatus.UNAUTHORIZED,
+        "Session tidak valid atau sudah logout"
+      ));
+
+    session.setRevokedAt(OffsetDateTime.now());
+    userSessionRepository.save(session);
+
+    return new LogoutResponse("Logout berhasil");
   }
 
   private String generateRefreshToken() {

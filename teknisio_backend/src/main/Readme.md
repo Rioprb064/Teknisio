@@ -158,11 +158,11 @@ Target: user bisa register, login, logout, refresh token, dan akses endpoint ses
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Validasi session belum revoked
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Generate access token baru
 
-- [ ] **BE-15 [MVP] Logout**
-  - Endpoint: `POST /api/auth/logout`
-  - [ ] Revoke session aktif
-  - [ ] Isi `revoked_at`
-  - [ ] Token lama tidak bisa dipakai refresh
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) **BE-15 [MVP] Logout**
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Endpoint: `POST /api/auth/logout`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Revoke session aktif
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Isi `revoked_at`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Token lama tidak bisa dipakai refresh
 
 - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) **BE-16 [MVP] Password hashing**
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Gunakan BCrypt
