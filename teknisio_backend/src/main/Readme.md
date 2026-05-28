@@ -2,6 +2,7 @@
 
 Roadmap pengerjaan backend pbo
 <!-- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) -->
+<!-- ![Status](https://img.shields.io/badge/status-ongoing-blue?style=flat-square) -->
 
 ## 0. Fondasi Backend
 
@@ -169,11 +170,11 @@ Target: user bisa register, login, logout, refresh token, dan akses endpoint ses
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Jangan pernah simpan password asli
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Jangan tampilkan `password_hash` di response
 
-- [ ] **BE-17 [MVP] Role-based access**
-  - [ ] Endpoint customer hanya bisa diakses customer
-  - [ ] Endpoint teknisi hanya bisa diakses teknisi
-  - [ ] Endpoint umum bisa diakses tanpa login jika diperlukan
-  - [ ] Endpoint profil sendiri wajib login
+- ![Status](https://img.shields.io/badge/status-ongoing-blue?style=flat-square) **BE-17 [MVP] Role-based access**
+  - ![Status](https://img.shields.io/badge/status-ongoing-blue?style=flat-square) Endpoint customer hanya bisa diakses customer
+  - ![Status](https://img.shields.io/badge/status-ongoing-blue?style=flat-square) Endpoint teknisi hanya bisa diakses teknisi
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Endpoint umum bisa diakses tanpa login jika diperlukan
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Endpoint profil sendiri wajib login
 
 ---
 
