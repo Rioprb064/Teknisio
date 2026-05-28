@@ -31,6 +31,7 @@ import java.util.Base64;
 @Service
 @RequiredArgsConstructor
 public class AuthSessionService {
+
   private final UserRepository userRepository;
   private final UserSessionRepository userSessionRepository;
   private final PasswordEncoder passwordEncoder;
@@ -48,20 +49,20 @@ public class AuthSessionService {
     User user = userRepository.findByEmailIgnoreCaseAndDeletedAtIsNull(email)
       .orElseThrow(() -> new ResponseStatusException(
         HttpStatus.UNAUTHORIZED,
-        "Email atau password salah"
+        "Invalid email or password"
       ));
 
     if (!passwordEncoder.matches(request.password(), user.getPasswordHash())) {
       throw new ResponseStatusException(
         HttpStatus.UNAUTHORIZED,
-        "Email atau password salah"
+        "Invalid email or password"
       );
     }
 
     if (user.getStatusAkun() != UserStatus.ACTIVE) {
       throw new ResponseStatusException(
         HttpStatus.FORBIDDEN,
-        "Akun tidak aktif"
+        "Account is not active"
       );
     }
 
@@ -105,7 +106,7 @@ public class AuthSessionService {
     UserSession session = userSessionRepository.findByRefreshTokenHashAndRevokedAtIsNull(refreshTokenHash)
       .orElseThrow(() -> new ResponseStatusException(
         HttpStatus.UNAUTHORIZED,
-        "Refresh token tidak valid"
+        "Invalid refresh token"
       ));
 
     OffsetDateTime now = OffsetDateTime.now();
@@ -116,20 +117,20 @@ public class AuthSessionService {
 
       throw new ResponseStatusException(
         HttpStatus.UNAUTHORIZED,
-        "Refresh token sudah expired"
+        "Refresh token has expired"
       );
     }
 
     User user = userRepository.findByIdUserAndDeletedAtIsNull(session.getUser().getIdUser())
       .orElseThrow(() -> new ResponseStatusException(
         HttpStatus.UNAUTHORIZED,
-        "User tidak valid"
+        "Invalid user"
       ));
 
     if (user.getStatusAkun() != UserStatus.ACTIVE) {
       throw new ResponseStatusException(
         HttpStatus.FORBIDDEN,
-        "Akun tidak aktif"
+        "Account is not active"
       );
     }
 
@@ -150,14 +151,13 @@ public class AuthSessionService {
     UserSession session = userSessionRepository.findByRefreshTokenHashAndRevokedAtIsNull(refreshTokenHash)
       .orElseThrow(() -> new ResponseStatusException(
         HttpStatus.UNAUTHORIZED,
-        "Session tidak valid atau sudah logout"
-      ))
-    ;
+        "Invalid session or already logged out"
+      ));
 
     session.setRevokedAt(OffsetDateTime.now());
     userSessionRepository.save(session);
 
-    return new LogoutResponse("Logout berhasil");
+    return new LogoutResponse("Logout successful");
   }
 
   private String generateRefreshToken() {
@@ -176,11 +176,9 @@ public class AuthSessionService {
 
       return Base64.getUrlEncoder()
         .withoutPadding()
-        .encodeToString(hash)
-      ;
-    }
-    catch (NoSuchAlgorithmException e) {
-      throw new IllegalStateException("SHA-256 tidak tersedia", e);
+        .encodeToString(hash);
+    } catch (NoSuchAlgorithmException e) {
+      throw new IllegalStateException("SHA-256 is not available", e);
     }
   }
 

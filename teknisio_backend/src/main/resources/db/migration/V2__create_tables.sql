@@ -5,7 +5,7 @@
 
 -- ============================================================
 -- USERS
--- Semua aktor ada di sini: CUSTOMER, TEKNISI, ADMIN.
+-- Semua aktor ada di sini: CUSTOMER, TECHNICIAN, ADMIN.
 -- ============================================================
 CREATE TABLE users (
   id_user             UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -34,7 +34,7 @@ CREATE TABLE users (
 
 -- ============================================================
 -- TEKNISI PROFILE
--- Data khusus teknisi. Satu user TEKNISI hanya boleh punya satu profil teknisi.
+-- Data khusus teknisi. Satu user TECHNICIAN hanya boleh punya satu profil teknisi.
 -- ============================================================
 CREATE TABLE teknisi_profile (
   id_teknisi_profile    UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -100,7 +100,6 @@ CREATE TABLE jenis_layanan (
 
 -- ============================================================
 -- TEKNISI LAYANAN
--- Pengganti ENUM TEKNISI_SPESIALISASI.
 -- Satu teknisi bisa menangani banyak jenis layanan.
 -- Satu jenis layanan bisa ditangani banyak teknisi.
 -- ============================================================
@@ -129,6 +128,7 @@ CREATE TABLE teknisi_layanan (
 -- PERMINTAAN LAYANAN
 -- Order utama dari customer ke teknisi.
 -- id_teknisi_profile dibuat nullable karena saat WAITING teknisi belum tentu dipilih/diterima.
+-- latitude dan longitude dibuat nullable karena aplikasi desktop memakai input alamat manual.
 -- ============================================================
 CREATE TABLE permintaan_layanan (
   id_permintaan           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -140,8 +140,8 @@ CREATE TABLE permintaan_layanan (
   id_teknisi_profile      UUID,
   id_layanan              UUID NOT NULL,
 
-  latitude                DECIMAL(10, 7) NOT NULL,
-  longitude               DECIMAL(10, 7) NOT NULL,
+  latitude                DECIMAL(10, 7),
+  longitude               DECIMAL(10, 7),
   alamat                  TEXT NOT NULL,
   detail_alamat           TEXT,
   deskripsi_masalah       TEXT NOT NULL,
@@ -183,10 +183,10 @@ CREATE TABLE permintaan_layanan (
     ON DELETE SET NULL,
 
   CONSTRAINT chk_permintaan_latitude
-    CHECK (latitude BETWEEN -90 AND 90),
+    CHECK (latitude IS NULL OR latitude BETWEEN -90 AND 90),
 
   CONSTRAINT chk_permintaan_longitude
-    CHECK (longitude BETWEEN -180 AND 180),
+    CHECK (longitude IS NULL OR longitude BETWEEN -180 AND 180),
 
   CONSTRAINT chk_permintaan_biaya
     CHECK (estimasi_biaya IS NULL OR biaya_akhir IS NULL OR biaya_akhir >= 0)

@@ -1,5 +1,0 @@
-TOKEN="3hNSsiDL5mfS80ZBnuMgRoLtYnM5y22ZdLRZMQoylPo--GlLBuOd7vW4R7qUd5g7yFqIUsn1ypYQXYsH7pliHw"
-
-curl -i -X POST http://localhost:8080/api/auth/logout \
-  -H "Content-Type: application/json" \
-  -d "{\"refreshToken\":\"$TOKEN\"}"

@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface PesanRepository extends JpaRepository<Pesan, UUID> {
     List<Pesan> findByPermintaan_IdPermintaanAndDeletedAtIsNullOrderByCreatedAtAsc(
-            UUID idPermintaan
+        UUID idPermintaan
     );
 
     long countByPermintaan_IdPermintaanAndReadAtIsNullAndDeletedAtIsNull(UUID idPermintaan);

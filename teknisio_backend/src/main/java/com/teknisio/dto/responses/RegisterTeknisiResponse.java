@@ -8,18 +8,18 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 public record RegisterTeknisiResponse(
-  UUID idUser,
-  UUID idTeknisiProfile,
-  String nama,
+  UUID userId,
+  UUID technicianProfileId,
+  String name,
   String email,
-  String noTelepon,
-  String alamat,
+  String phoneNumber,
+  String address,
   UserRole role,
-  UserStatus statusAkun,
-  TeknisiStatus statusKetersediaan,
-  BigDecimal ratingAvg,
+  UserStatus accountStatus,
+  TeknisiStatus availabilityStatus,
+  BigDecimal averageRating,
   Integer ratingCount,
-  Integer totalPekerjaan,
-  String deskripsi
+  Integer totalJobs,
+  String description
 ) {
 }

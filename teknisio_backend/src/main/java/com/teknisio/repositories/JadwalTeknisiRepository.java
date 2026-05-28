@@ -11,7 +11,7 @@ import java.util.UUID;
 public interface JadwalTeknisiRepository extends JpaRepository<JadwalTeknisi, UUID> {
     List<JadwalTeknisi> findByTeknisiProfile_IdTeknisiProfileAndAktifTrue(UUID idTeknisiProfile);
     List<JadwalTeknisi> findByTeknisiProfile_IdTeknisiProfileAndHariAndAktifTrue(
-            UUID idTeknisiProfile,
-            HariEnum hari
+        UUID idTeknisiProfile,
+        HariEnum hari
     );
 }

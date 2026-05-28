@@ -13,17 +13,19 @@ public interface PermintaanLayananRepository extends JpaRepository<PermintaanLay
     Optional<PermintaanLayanan> findByKodePermintaan(String kodePermintaan);
 
     List<PermintaanLayanan> findByPengguna_IdUserOrderByWaktuPermintaanDesc(UUID idUser);
-
     List<PermintaanLayanan> findByPengguna_IdUserAndStatusOrderByWaktuPermintaanDesc(
         UUID idUser,
-        RequestStatus status);
+        RequestStatus status
+    );
 
     List<PermintaanLayanan> findByTeknisiProfile_IdTeknisiProfileOrderByWaktuPermintaanDesc(
-        UUID idTeknisiProfile);
+        UUID idTeknisiProfile
+    );
 
     List<PermintaanLayanan> findByTeknisiProfile_IdTeknisiProfileAndStatusOrderByWaktuPermintaanDesc(
         UUID idTeknisiProfile,
-        RequestStatus status);
+        RequestStatus status
+    );
 
     List<PermintaanLayanan> findByStatusOrderByWaktuPermintaanDesc(RequestStatus status);
 }

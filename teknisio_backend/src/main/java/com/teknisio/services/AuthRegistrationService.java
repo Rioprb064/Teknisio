@@ -23,16 +23,17 @@ import java.math.BigDecimal;
 @Service
 @RequiredArgsConstructor
 public class AuthRegistrationService {
+
   private final UserRepository userRepository;
   private final TeknisiProfileRepository teknisiProfileRepository;
   private final PasswordEncoder passwordEncoder;
 
   @Transactional
   public RegisterCustomerResponse registerCustomer(RegisterCustomerRequest request) {
-    String nama = request.nama().trim();
+    String nama = request.name().trim();
     String email = normalizeEmail(request.email());
-    String noTelepon = request.noTelepon().trim();
-    String alamat = request.alamat().trim();
+    String noTelepon = request.phoneNumber().trim();
+    String alamat = request.address().trim();
 
     validateEmailAndPhoneUnique(email, noTelepon);
 
@@ -61,11 +62,11 @@ public class AuthRegistrationService {
 
   @Transactional
   public RegisterTeknisiResponse registerTeknisi(RegisterTeknisiRequest request) {
-    String nama = request.nama().trim();
+    String nama = request.name().trim();
     String email = normalizeEmail(request.email());
-    String noTelepon = request.noTelepon().trim();
-    String alamat = request.alamat().trim();
-    String deskripsi = request.deskripsi().trim();
+    String noTelepon = request.phoneNumber().trim();
+    String alamat = request.address().trim();
+    String deskripsi = request.description().trim();
 
     validateEmailAndPhoneUnique(email, noTelepon);
 
@@ -75,7 +76,7 @@ public class AuthRegistrationService {
       .noTelepon(noTelepon)
       .passwordHash(passwordEncoder.encode(request.password()))
       .alamat(alamat)
-      .role(UserRole.TEKNISI)
+      .role(UserRole.TECHNICIAN)
       .statusAkun(UserStatus.ACTIVE)
       .build();
 
@@ -115,11 +116,11 @@ public class AuthRegistrationService {
 
   private void validateEmailAndPhoneUnique(String email, String noTelepon) {
     if (userRepository.existsByEmailIgnoreCaseAndDeletedAtIsNull(email)) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email sudah digunakan");
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email is already registered");
     }
 
     if (userRepository.existsByNoTeleponAndDeletedAtIsNull(noTelepon)) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nomor telepon sudah digunakan");
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Phone number is already registered");
     }
   }
 }

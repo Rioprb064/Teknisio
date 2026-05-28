@@ -14,9 +14,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.io.IOException;
+
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
+
   private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
   @Bean
@@ -34,44 +37,50 @@ public class SecurityConfig {
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
       )
       .exceptionHandling(exception -> exception
-        .authenticationEntryPoint((request, response, authException) -> {
-          response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-          response.setContentType("application/json");
-          response.getWriter().write(
-            "{\"success\":false,\"message\":\"Unauthorized\",\"errors\":{}}"
-          );
-        })
-        .accessDeniedHandler((request, response, accessDeniedException) -> {
-          response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-          response.setContentType("application/json");
-          response.getWriter().write(
-            "{\"success\":false,\"message\":\"Forbidden\",\"errors\":{}}"
-          );
-        })
+        .authenticationEntryPoint((request, response, authException) ->
+          writeErrorResponse(response, HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized")
+        )
+        .accessDeniedHandler((request, response, accessDeniedException) ->
+          writeErrorResponse(response, HttpServletResponse.SC_FORBIDDEN, "Forbidden")
+        )
       )
       .authorizeHttpRequests(auth -> auth
         // Public auth endpoints
         .requestMatchers(HttpMethod.POST, "/api/auth/register/customer").permitAll()
-        .requestMatchers(HttpMethod.POST, "/api/auth/register/teknisi").permitAll()
+        .requestMatchers(HttpMethod.POST, "/api/auth/register/technician").permitAll()
         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
         .requestMatchers(HttpMethod.POST, "/api/auth/refresh").permitAll()
 
-        // Public endpoints jika diperlukan
+        // Public endpoints if needed
         .requestMatchers("/api/public/**").permitAll()
         .requestMatchers("/actuator/health").permitAll()
 
-        // Authenticated profile
+        // Authenticated auth endpoints
         .requestMatchers(HttpMethod.GET, "/api/auth/profile").authenticated()
+        .requestMatchers(HttpMethod.POST, "/api/auth/logout").authenticated()
 
         // Role-based endpoints
-        .requestMatchers("/api/customer/**").hasRole("CUSTOMER")
-        .requestMatchers("/api/teknisi/**").hasRole("TEKNISI")
+        .requestMatchers("/api/customers/**").hasRole("CUSTOMER")
+        .requestMatchers("/api/technicians/**").hasRole("TECHNICIAN")
         .requestMatchers("/api/admin/**").hasRole("ADMIN")
 
-        // Default: endpoint lain wajib login
+        // Default: all other endpoints require authentication
         .anyRequest().authenticated()
       )
       .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
       .build();
+  }
+
+  private void writeErrorResponse(
+    HttpServletResponse response,
+    int status,
+    String message
+  )
+  throws IOException {
+    response.setStatus(status);
+    response.setContentType("application/json");
+    response.getWriter().write(
+      "{\"success\":false,\"message\":\"" + message + "\",\"data\":null,\"errors\":{}}"
+    );
   }
 }

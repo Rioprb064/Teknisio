@@ -1,6 +1,5 @@
 -- ============================================================
 -- Teknisio Migration V1: Extension dan ENUM
--- Jalankan pertama. Dibuat dari teknisio_database_v2.sql
 -- ============================================================
 
 -- ============================================================
@@ -11,9 +10,10 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 -- ============================================================
 -- ENUMS
 -- ============================================================
+
 CREATE TYPE user_role AS ENUM (
   'CUSTOMER',
-  'TEKNISI',
+  'TECHNICIAN',
   'ADMIN'
 );
 
@@ -47,17 +47,17 @@ CREATE TYPE pesan_type AS ENUM (
 );
 
 CREATE TYPE notification_reference_type AS ENUM (
-  'PERMINTAAN',
+  'SERVICE_REQUEST',
   'CHAT',
   'REVIEW'
 );
 
 CREATE TYPE hari_enum AS ENUM (
-  'SENIN',
-  'SELASA',
-  'RABU',
-  'KAMIS',
-  'JUMAT',
-  'SABTU',
-  'MINGGU'
+  'MONDAY',
+  'TUESDAY',
+  'WEDNESDAY',
+  'THURSDAY',
+  'FRIDAY',
+  'SATURDAY',
+  'SUNDAY'
 );

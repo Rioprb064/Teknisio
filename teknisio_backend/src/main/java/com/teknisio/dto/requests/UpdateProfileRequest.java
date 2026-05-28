@@ -4,19 +4,19 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public record UpdateProfileRequest(
-  @Size(max = 100, message = "Nama maksimal 100 karakter")
-  String nama,
+  @Size(max = 100, message = "Name must be at most 100 characters")
+  String name,
 
   @Pattern(
     regexp = "^\\+?[0-9]{10,15}$",
-    message = "Nomor telepon harus 10-15 digit dan boleh diawali +"
+    message = "Phone number must be 10-15 digits and may start with +"
   )
-  String noTelepon,
+  String phoneNumber,
 
-  @Size(max = 500, message = "Alamat maksimal 500 karakter")
-  String alamat,
+  @Size(max = 500, message = "Address must be at most 500 characters")
+  String address,
 
-  @Size(max = 1000, message = "URL foto profil maksimal 1000 karakter")
-  String fotoProfil
+  @Size(max = 1000, message = "Profile photo URL must be at most 1000 characters")
+  String profilePhoto
 ) {
 }

@@ -1,7 +1,7 @@
 package com.teknisio.model.enums;
 
 public enum NotificationReferenceType {
-    PERMINTAAN,
-    CHAT,
-    REVIEW
+  SERVICE_REQUEST,
+  CHAT,
+  REVIEW
 }

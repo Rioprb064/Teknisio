@@ -6,12 +6,12 @@ import com.teknisio.model.enums.UserStatus;
 import java.util.UUID;
 
 public record RegisterCustomerResponse(
-  UUID idUser,
-  String nama,
+  UUID userId,
+  String name,
   String email,
-  String noTelepon,
-  String alamat,
+  String phoneNumber,
+  String address,
   UserRole role,
-  UserStatus statusAkun
+  UserStatus accountStatus
 ) {
 }

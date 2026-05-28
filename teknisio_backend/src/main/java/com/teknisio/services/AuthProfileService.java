@@ -18,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 @RequiredArgsConstructor
 public class AuthProfileService {
+
   private final UserRepository userRepository;
   private final TeknisiProfileRepository teknisiProfileRepository;
 
@@ -26,21 +27,21 @@ public class AuthProfileService {
     User user = userRepository.findByIdUserAndDeletedAtIsNull(authenticatedUser.getIdUser())
       .orElseThrow(() -> new ResponseStatusException(
         HttpStatus.UNAUTHORIZED,
-        "User tidak valid"
+        "Invalid user"
       ));
 
     if (user.getStatusAkun() != UserStatus.ACTIVE) {
       throw new ResponseStatusException(
         HttpStatus.FORBIDDEN,
-        "Akun tidak aktif"
+        "Account is not active"
       );
     }
 
-    if (user.getRole() == UserRole.TEKNISI) {
+    if (user.getRole() == UserRole.TECHNICIAN) {
       TeknisiProfile profile = teknisiProfileRepository.findByUser_IdUser(user.getIdUser())
         .orElseThrow(() -> new ResponseStatusException(
           HttpStatus.INTERNAL_SERVER_ERROR,
-          "Profil teknisi tidak ditemukan"
+          "Technician profile not found"
         ));
 
       return new TeknisiAuthProfileResponse(

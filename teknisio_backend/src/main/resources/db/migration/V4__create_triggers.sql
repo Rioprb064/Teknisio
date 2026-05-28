@@ -27,7 +27,7 @@ RETURNS TRIGGER AS $$
 BEGIN
   IF TG_OP = 'INSERT' THEN
     IF NEW.status <> 'WAITING' THEN
-      RAISE EXCEPTION 'status awal permintaan_layanan harus WAITING';
+      RAISE EXCEPTION 'Initial service request status must be WAITING';
     END IF;
 
     NEW.waktu_permintaan := COALESCE(NEW.waktu_permintaan, CURRENT_TIMESTAMP);
@@ -36,17 +36,17 @@ BEGIN
 
   IF NEW.status IS DISTINCT FROM OLD.status THEN
     IF OLD.status = 'WAITING' AND NEW.status NOT IN ('ACCEPTED', 'REJECTED', 'CANCELLED') THEN
-      RAISE EXCEPTION 'transisi status tidak valid: WAITING hanya boleh ke ACCEPTED, REJECTED, atau CANCELLED';
+      RAISE EXCEPTION 'Invalid status transition: WAITING can only change to ACCEPTED, REJECTED, or CANCELLED';
     ELSIF OLD.status = 'ACCEPTED' AND NEW.status NOT IN ('ON_PROGRESS', 'CANCELLED') THEN
-      RAISE EXCEPTION 'transisi status tidak valid: ACCEPTED hanya boleh ke ON_PROGRESS atau CANCELLED';
+      RAISE EXCEPTION 'Invalid status transition: ACCEPTED can only change to ON_PROGRESS or CANCELLED';
     ELSIF OLD.status = 'ON_PROGRESS' AND NEW.status NOT IN ('COMPLETED', 'CANCELLED') THEN
-      RAISE EXCEPTION 'transisi status tidak valid: ON_PROGRESS hanya boleh ke COMPLETED atau CANCELLED';
+      RAISE EXCEPTION 'Invalid status transition: ON_PROGRESS can only change to COMPLETED or CANCELLED';
     ELSIF OLD.status IN ('COMPLETED', 'CANCELLED', 'REJECTED') THEN
-      RAISE EXCEPTION 'status % bersifat final dan tidak boleh diubah', OLD.status;
+      RAISE EXCEPTION 'Status % is final and cannot be changed', OLD.status;
     END IF;
 
     IF NEW.status IN ('ACCEPTED', 'ON_PROGRESS', 'COMPLETED') AND NEW.id_teknisi_profile IS NULL THEN
-      RAISE EXCEPTION 'status ACCEPTED/ON_PROGRESS/COMPLETED harus memiliki id_teknisi_profile';
+      RAISE EXCEPTION 'Status ACCEPTED, ON_PROGRESS, or COMPLETED requires a technician profile';
     END IF;
 
     IF NEW.status = 'ACCEPTED' THEN
@@ -82,7 +82,7 @@ BEGIN
       NEW.diubah_oleh_terakhir,
       NULL,
       NEW.status,
-      'Status awal permintaan dibuat'
+      'Service request created'
     );
   ELSIF NEW.status IS DISTINCT FROM OLD.status THEN
     INSERT INTO riwayat_status (
@@ -96,7 +96,7 @@ BEGIN
       NEW.diubah_oleh_terakhir,
       OLD.status,
       NEW.status,
-      'Status permintaan diperbarui'
+      'Service request status updated'
     );
   END IF;
 

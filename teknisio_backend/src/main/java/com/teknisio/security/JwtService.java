@@ -37,14 +37,16 @@ public class JwtService {
       .issuedAt(now)
       .expiration(expiredAt)
       .signWith(getSigningKey(), Jwts.SIG.HS256)
-      .compact();
+      .compact()
+    ;
   }
 
   public boolean isTokenValid(String token) {
     try {
       getClaims(token);
       return true;
-    } catch (JwtException | IllegalArgumentException e) {
+    }
+    catch (JwtException | IllegalArgumentException exception) {
       return false;
     }
   }
@@ -63,14 +65,15 @@ public class JwtService {
       .verifyWith(getSigningKey())
       .build()
       .parseSignedClaims(token)
-      .getPayload();
+      .getPayload()
+    ;
   }
 
   private SecretKey getSigningKey() {
     byte[] keyBytes = jwtSecret.getBytes(StandardCharsets.UTF_8);
 
     if (keyBytes.length < 32) {
-      throw new IllegalStateException("JWT_SECRET minimal harus 32 karakter");
+      throw new IllegalStateException("JWT_SECRET must be at least 32 characters");
     }
 
     return Keys.hmacShaKeyFor(keyBytes);

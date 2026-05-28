@@ -71,47 +71,67 @@ Target: backend punya struktur rapi, response seragam, error handling, repositor
 
 ## 1. Master Data Layanan
 
-Target: customer bisa menampilkan kategori dan jenis layanan.
+Target: customer bisa melihat katalog kategori layanan dan jenis layanan yang tersedia sebelum membuat permintaan layanan.
 
-- [ ] **BE-20 [MVP] List kategori layanan aktif**
-  - Endpoint: `GET /api/kategori-layanan`
-  - [ ] Hanya tampilkan data `aktif = true`
-  - [ ] Jangan tampilkan data yang sudah soft delete
-  - [ ] Response berisi `idKategori`, `namaKategori`, `icon`
+Catatan:
+- Endpoint master data ini boleh public karena hanya berisi katalog layanan.
+- Data yang ditampilkan hanya data aktif dan belum soft delete.
+- Seed data dikerjakan lebih dulu supaya endpoint list/detail bisa langsung dites.
 
-- [ ] **BE-21 [MVP] Detail kategori layanan**
-  - Endpoint: `GET /api/kategori-layanan/{id}`
-  - [ ] Validasi kategori ditemukan
-  - [ ] Validasi kategori aktif
-  - [ ] Return detail kategori
-
-- [ ] **BE-22 [MVP] List semua jenis layanan aktif**
-  - Endpoint: `GET /api/jenis-layanan`
-  - [ ] Hanya tampilkan layanan aktif
-  - [ ] Sertakan info kategori
-  - [ ] Sertakan estimasi menit
-  - [ ] Sertakan rentang harga jika ada
-
-- [ ] **BE-23 [MVP] List jenis layanan per kategori**
-  - Endpoint: `GET /api/kategori-layanan/{id}/jenis-layanan`
-  - [ ] Validasi kategori ditemukan
-  - [ ] Filter berdasarkan kategori
-  - [ ] Hanya tampilkan layanan aktif
-
-- [ ] **BE-24 [MVP] Detail jenis layanan**
-  - Endpoint: `GET /api/jenis-layanan/{id}`
-  - [ ] Validasi layanan ditemukan
-  - [ ] Validasi layanan aktif
-  - [ ] Return detail layanan
-
-- [ ] **BE-25 [MVP] Seed data kategori dan layanan**
-  - [ ] Tambah kategori AC
+- ![Status](https://img.shields.io/badge/status-ongoing-blue?style=flat-square) **BE-25 [MVP] Seed data kategori dan layanan**
+  - ![Status](https://img.shields.io/badge/status-ongoing-blue?style=flat-square) Tambah kategori AC
   - [ ] Tambah kategori Kulkas
   - [ ] Tambah kategori Mesin Cuci
   - [ ] Tambah kategori TV
   - [ ] Tambah kategori Kipas Angin
   - [ ] Tambah kategori Rice Cooker
   - [ ] Tambah minimal 2 jenis layanan per kategori
+  - [ ] Pastikan seed data tidak duplikat saat migration dijalankan ulang
+  - [ ] Pastikan semua data default `aktif = true`
+
+- [ ] **BE-20 [MVP] List kategori layanan aktif**
+  - Endpoint: `GET /api/kategori-layanan`
+  - [ ] Hanya tampilkan data `aktif = true`
+  - [ ] Jangan tampilkan data yang sudah soft delete
+  - [ ] Response berisi `idKategori`, `namaKategori`, `icon`
+  - [ ] Endpoint boleh diakses tanpa login
+
+- [ ] **BE-21 [MVP] Detail kategori layanan**
+  - Endpoint: `GET /api/kategori-layanan/{id}`
+  - [ ] Validasi kategori ditemukan
+  - [ ] Validasi kategori aktif
+  - [ ] Validasi kategori belum soft delete
+  - [ ] Return detail kategori
+  - [ ] Jika kategori tidak ditemukan, return error rapi
+
+- [ ] **BE-22 [MVP] List semua jenis layanan aktif**
+  - Endpoint: `GET /api/jenis-layanan`
+  - [ ] Hanya tampilkan layanan `aktif = true`
+  - [ ] Jangan tampilkan layanan yang sudah soft delete
+  - [ ] Jangan tampilkan layanan dari kategori yang tidak aktif
+  - [ ] Sertakan info kategori
+  - [ ] Sertakan estimasi menit
+  - [ ] Sertakan rentang harga jika ada
+  - [ ] Endpoint boleh diakses tanpa login
+
+- [ ] **BE-23 [MVP] List jenis layanan per kategori**
+  - Endpoint: `GET /api/kategori-layanan/{id}/jenis-layanan`
+  - [ ] Validasi kategori ditemukan
+  - [ ] Validasi kategori aktif
+  - [ ] Validasi kategori belum soft delete
+  - [ ] Filter layanan berdasarkan kategori
+  - [ ] Hanya tampilkan layanan `aktif = true`
+  - [ ] Jangan tampilkan layanan yang sudah soft delete
+  - [ ] Endpoint boleh diakses tanpa login
+
+- [ ] **BE-24 [MVP] Detail jenis layanan**
+  - Endpoint: `GET /api/jenis-layanan/{id}`
+  - [ ] Validasi layanan ditemukan
+  - [ ] Validasi layanan aktif
+  - [ ] Validasi layanan belum soft delete
+  - [ ] Validasi kategori layanan masih aktif
+  - [ ] Return detail layanan beserta kategori
+  - [ ] Jika layanan tidak ditemukan, return error rapi
 
 ---
 

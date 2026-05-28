@@ -12,11 +12,11 @@ public record LoginResponse(
   Long expiresInMs,
   Long refreshExpiresInMs,
 
-  UUID idUser,
-  String nama,
+  UUID userId,
+  String name,
   String email,
-  String noTelepon,
+  String phoneNumber,
   UserRole role,
-  UserStatus statusAkun
+  UserStatus accountStatus
 ) {
 }

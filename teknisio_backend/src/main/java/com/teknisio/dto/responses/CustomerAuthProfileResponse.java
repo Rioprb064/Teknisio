@@ -6,13 +6,13 @@ import com.teknisio.model.enums.UserStatus;
 import java.util.UUID;
 
 public record CustomerAuthProfileResponse(
-  UUID idUser,
-  String nama,
+  UUID userId,
+  String name,
   String email,
-  String noTelepon,
-  String alamat,
+  String phoneNumber,
+  String address,
   UserRole role,
-  UserStatus statusAkun,
-  String fotoProfil
+  UserStatus accountStatus,
+  String profilePhoto
 )
 implements AuthProfileResponse {}

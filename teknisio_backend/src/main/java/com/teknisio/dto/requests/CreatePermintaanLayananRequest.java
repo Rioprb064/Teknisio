@@ -10,25 +10,26 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 public record CreatePermintaanLayananRequest(
-  @NotNull(message = "ID layanan wajib diisi")
-  UUID idLayanan,
+  @NotNull(message = "Service type ID is required")
+  UUID serviceTypeId,
 
-  @DecimalMin(value = "-90.0", message = "Latitude minimal -90")
-  @DecimalMax(value = "90.0", message = "Latitude maksimal 90")
+  @DecimalMin(value = "-90.0", message = "Latitude must be at least -90")
+  @DecimalMax(value = "90.0", message = "Latitude must be at most 90")
   BigDecimal latitude,
 
-  @DecimalMin(value = "-180.0", message = "Longitude minimal -180")
-  @DecimalMax(value = "180.0", message = "Longitude maksimal 180")
+  @DecimalMin(value = "-180.0", message = "Longitude must be at least -180")
+  @DecimalMax(value = "180.0", message = "Longitude must be at most 180")
   BigDecimal longitude,
 
-  @NotBlank(message = "Alamat wajib diisi")
-  @Size(max = 1000, message = "Alamat maksimal 1000 karakter")
-  String alamat,
+  @NotBlank(message = "Address is required")
+  @Size(max = 1000, message = "Address must be at most 1000 characters")
+  String address,
 
-  @Size(max = 1000, message = "Detail alamat maksimal 1000 karakter")
-  String detailAlamat,
+  @Size(max = 1000, message = "Address detail must be at most 1000 characters")
+  String addressDetail,
 
-  @NotBlank(message = "Deskripsi masalah wajib diisi")
-  @Size(max = 2000, message = "Deskripsi masalah maksimal 2000 karakter")
-  String deskripsiMasalah) {
+  @NotBlank(message = "Issue description is required")
+  @Size(max = 2000, message = "Issue description must be at most 2000 characters")
+  String issueDescription
+) {
 }
