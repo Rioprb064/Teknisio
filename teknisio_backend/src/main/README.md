@@ -132,11 +132,11 @@ Target: backend punya struktur rapi, response seragam, error handling, repositor
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `RiwayatStatusRepository`
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `ReviewRepository`
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `LogAktivitasRepository`
-  - ![Status](https://img.shields.io/badge/status-ongoing-blue?style=flat-square) `TeknisiKategoriLayananRepository`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `TeknisiKategoriLayananRepository`
   - ![Status](https://img.shields.io/badge/status-ongoing-blue?style=flat-square) `PermintaanLayananKategoriRepository`
-  - ![Status](https://img.shields.io/badge/status-ongoing-blue?style=flat-square) `JenisLayananRepository` tetap legacy
-  - ![Status](https://img.shields.io/badge/status-ongoing-blue?style=flat-square) `TeknisiLayananRepository` tetap legacy
-
+  - ![finished](https://img.shields.io/badge/%5Blegacy%5D-lightgrey?style=flat-square) `JenisLayananRepository` tetap legacy
+  - ![finished](https://img.shields.io/badge/%5Blegacy%5D-lightgrey?style=flat-square) `TeknisiLayananRepository` tetap legacy
+  
 - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) **BE-05 [MVP] Validasi koneksi database dan Flyway**
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `./gradlew clean build` sukses
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `./gradlew bootRun` sukses
