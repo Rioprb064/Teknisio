@@ -229,15 +229,20 @@ Target: customer bisa melihat daftar alat elektronik dan backend bisa mencari te
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Jika technician tidak ditemukan, return `Technician not found`
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Endpoint digunakan setelah customer memilih technician
 
-- ![Status](https://img.shields.io/badge/status-ongoing-blue?style=flat-square) **BE-26 [NEXT] Filter technician**
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) **BE-26 [NEXT] Filter technician**
   - Endpoint: `GET /api/customers/technicians?deviceCategoryId={deviceCategoryId}&availabilityStatus=ONLINE&sort=rating`
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Filter berdasarkan status ketersediaan
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Sort berdasarkan rating
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Sort berdasarkan total pekerjaan
-  - ![Status](https://img.shields.io/badge/status-ongoing-blue?style=flat-square) Sort berdasarkan harga jika harga technician sudah tersedia
-  - ![Status](https://img.shields.io/badge/status-ongoing-blue?style=flat-square) Sort berdasarkan jarak jika latitude dan longitude technician sudah tersedia
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Sort berdasarkan nama
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Validasi invalid `availabilityStatus`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Validasi invalid `sort`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Tanpa token return `Unauthorized`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Token technician return `Forbidden`
+  - ![deferred](https://img.shields.io/badge/%5Bdeferred%5D-lightgrey?style=flat-square) Sort berdasarkan harga jika harga technician sudah tersedia
+  - ![deferred](https://img.shields.io/badge/%5Bdeferred%5D-lightgrey?style=flat-square) Sort berdasarkan jarak jika latitude dan longitude technician sudah tersedia
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Untuk MVP awal, filter jarak boleh ditunda
-
+  
 ---
 
 ## 2. Auth dan Session
