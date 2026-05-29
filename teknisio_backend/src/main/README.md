@@ -150,82 +150,93 @@ Target: backend punya struktur rapi, response seragam, error handling, repositor
 
 Target: customer bisa melihat daftar alat elektronik dan backend bisa mencari technician berdasarkan keahlian alat elektronik.
 
-- [ ] **BE-20 [MVP] Seed data kategori alat elektronik**
-  - [ ] Tambah kategori Air Conditioner
-  - [ ] Tambah kategori Refrigerator
-  - [ ] Tambah kategori Washing Machine
-  - [ ] Tambah kategori Television
-  - [ ] Tambah kategori Fan
-  - [ ] Tambah kategori Rice Cooker
-  - [ ] Tambah kategori lain jika UI membutuhkan, misalnya Oven atau Mixer
-  - [ ] Pastikan seed data tidak duplikat saat migration dijalankan ulang
-  - [ ] Pastikan semua data default `aktif = true`
-  - [ ] Tidak perlu seed jenis layanan/detail servis untuk MVP
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) **BE-20 [MVP] Seed data kategori alat elektronik**
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Tambah kategori Air Conditioner
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Tambah kategori Refrigerator
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Tambah kategori Washing Machine
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Tambah kategori Television
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Tambah kategori Fan
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Tambah kategori Rice Cooker
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Tambah kategori lain jika UI membutuhkan, misalnya Oven atau Mixer
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Pastikan seed data tidak duplikat saat migration dijalankan ulang
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Pastikan semua data default `aktif = true`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Tidak perlu seed jenis layanan/detail servis untuk MVP
 
-- [ ] **BE-21 [MVP] List kategori alat elektronik aktif**
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) **BE-21 [MVP] List kategori alat elektronik aktif**
   - Endpoint: `GET /api/device-categories`
-  - [ ] Hanya tampilkan data `aktif = true`
-  - [ ] Jangan tampilkan data yang sudah soft delete
-  - [ ] Response menggunakan field English
-  - [ ] Response berisi `deviceCategoryId`, `name`, `icon`
-  - [ ] Endpoint boleh diakses tanpa login
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Hanya tampilkan data `aktif = true`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Jangan tampilkan data yang sudah soft delete
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Response menggunakan field English
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Response berisi `deviceCategoryId`, `name`, `icon`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Endpoint boleh diakses tanpa login
 
-- [ ] **BE-22 [MVP] Detail kategori alat elektronik**
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) **BE-22 [MVP] Detail kategori alat elektronik**
   - Endpoint: `GET /api/device-categories/{deviceCategoryId}`
-  - [ ] Validasi kategori ditemukan
-  - [ ] Validasi kategori aktif
-  - [ ] Validasi kategori belum soft delete
-  - [ ] Response menggunakan field English
-  - [ ] Response berisi `deviceCategoryId`, `name`, `icon`
-  - [ ] Jika kategori tidak ditemukan, return error rapi
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Validasi kategori ditemukan
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Validasi kategori aktif
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Validasi kategori belum soft delete
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Response menggunakan field English
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Response berisi `deviceCategoryId`, `name`, `icon`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Jika kategori tidak ditemukan, return error rapi
 
-- [ ] **BE-23 [MVP] Buat relasi keahlian technician berdasarkan kategori alat elektronik**
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) **BE-23 [MVP] Buat relasi keahlian technician berdasarkan kategori alat elektronik**
   - Tabel: `teknisi_kategori_layanan`
-  - [ ] Satu technician bisa memiliki banyak keahlian alat elektronik
-  - [ ] Satu kategori alat elektronik bisa dimiliki banyak technician
-  - [ ] Relasi menggunakan `id_teknisi_profile`
-  - [ ] Relasi menggunakan `id_kategori`
-  - [ ] Pastikan relasi tidak duplikat
-  - [ ] Pastikan data default `aktif = true`
-  - [ ] Relasi ini digunakan untuk mencari technician berdasarkan alat elektronik yang dipilih customer
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Satu technician bisa memiliki banyak keahlian alat elektronik
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Satu kategori alat elektronik bisa dimiliki banyak technician
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Relasi menggunakan `id_teknisi_profile`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Relasi menggunakan `id_kategori`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Pastikan relasi tidak duplikat
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Pastikan data default `aktif = true`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Relasi ini digunakan untuk mencari technician berdasarkan alat elektronik yang dipilih customer
 
-- [ ] **BE-24 [MVP] Search technician berdasarkan kategori alat elektronik**
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) **BE-24 [MVP] Search technician berdasarkan kategori alat elektronik**
   - Endpoint: `GET /api/customers/technicians?deviceCategoryId={deviceCategoryId}`
-  - [ ] Endpoint hanya untuk customer yang sudah login
-  - [ ] Validasi `deviceCategoryId` ditemukan
-  - [ ] Validasi kategori aktif
-  - [ ] Validasi kategori belum soft delete
-  - [ ] Tampilkan technician yang memiliki keahlian pada kategori tersebut
-  - [ ] Hanya tampilkan technician dengan relasi keahlian aktif
-  - [ ] Sertakan `technicianProfileId`
-  - [ ] Sertakan `name`
-  - [ ] Sertakan `profilePhoto`
-  - [ ] Sertakan `availabilityStatus`
-  - [ ] Sertakan `averageRating`
-  - [ ] Sertakan `ratingCount`
-  - [ ] Sertakan `totalJobs`
-  - [ ] Sertakan `supportedDeviceCategories`
-  - [ ] Response menggunakan field English
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Endpoint hanya untuk customer yang sudah login
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Validasi `deviceCategoryId` ditemukan
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Validasi kategori aktif
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Validasi kategori belum soft delete
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Tampilkan technician yang memiliki keahlian pada kategori tersebut
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Hanya tampilkan technician dengan relasi keahlian aktif
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Sertakan `technicianProfileId`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Sertakan `name`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Sertakan `profilePhoto`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Sertakan `availabilityStatus`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Sertakan `averageRating`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Sertakan `ratingCount`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Sertakan `totalJobs`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Sertakan `supportedDeviceCategories`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Response menggunakan field English
 
-- [ ] **BE-25 [MVP] Detail keahlian technician**
-  - Endpoint: `GET /api/customers/technicians/{technicianProfileId}/device-categories`
-  - [ ] Endpoint hanya untuk customer yang sudah login
-  - [ ] Validasi technician ditemukan
-  - [ ] Validasi akun technician aktif
-  - [ ] Tampilkan semua kategori alat elektronik yang dikuasai technician
-  - [ ] Hanya tampilkan relasi keahlian aktif
-  - [ ] Jangan tampilkan kategori yang tidak aktif atau sudah soft delete
-  - [ ] Response menggunakan field English
-  - [ ] Endpoint digunakan setelah customer memilih technician
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) **BE-25 [MVP] Detail technician untuk customer**
+  - Endpoint: `GET /api/customers/technicians/{technicianProfileId}`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Endpoint hanya untuk customer yang sudah login
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Tanpa token return `Unauthorized`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Token technician return `Forbidden`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Validasi technician ditemukan
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Validasi akun technician aktif
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return `technicianProfileId`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return `name`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return `profilePhoto`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return `availabilityStatus`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return `averageRating`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return `ratingCount`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return `totalJobs`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return `description`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return `supportedDeviceCategories`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `supportedDeviceCategories` hanya berisi relasi keahlian aktif
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Jangan tampilkan kategori yang tidak aktif atau sudah soft delete
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Response menggunakan field English
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Jika technician tidak ditemukan, return `Technician not found`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Endpoint digunakan setelah customer memilih technician
 
-- [ ] **BE-26 [NEXT] Filter technician**
+- ![Status](https://img.shields.io/badge/status-ongoing-blue?style=flat-square) **BE-26 [NEXT] Filter technician**
   - Endpoint: `GET /api/customers/technicians?deviceCategoryId={deviceCategoryId}&availabilityStatus=ONLINE&sort=rating`
-  - [ ] Filter berdasarkan status ketersediaan
-  - [ ] Sort berdasarkan rating
-  - [ ] Sort berdasarkan total pekerjaan
-  - [ ] Sort berdasarkan harga jika harga technician sudah tersedia
-  - [ ] Sort berdasarkan jarak jika latitude dan longitude technician sudah tersedia
-  - [ ] Untuk MVP awal, filter jarak boleh ditunda
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Filter berdasarkan status ketersediaan
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Sort berdasarkan rating
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Sort berdasarkan total pekerjaan
+  - ![Status](https://img.shields.io/badge/status-ongoing-blue?style=flat-square) Sort berdasarkan harga jika harga technician sudah tersedia
+  - ![Status](https://img.shields.io/badge/status-ongoing-blue?style=flat-square) Sort berdasarkan jarak jika latitude dan longitude technician sudah tersedia
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Untuk MVP awal, filter jarak boleh ditunda
 
 ---
 

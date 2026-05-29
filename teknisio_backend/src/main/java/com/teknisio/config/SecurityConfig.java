@@ -51,6 +51,10 @@ public class SecurityConfig {
         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
         .requestMatchers(HttpMethod.POST, "/api/auth/refresh").permitAll()
 
+        // Public device category endpoints
+        .requestMatchers(HttpMethod.GET, "/api/device-categories").permitAll()
+        .requestMatchers(HttpMethod.GET, "/api/device-categories/*").permitAll()
+
         // Public endpoints if needed
         .requestMatchers("/api/public/**").permitAll()
         .requestMatchers("/actuator/health").permitAll()
