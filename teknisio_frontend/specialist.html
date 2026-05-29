@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Specialized Technician — Teknisio</title>
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    .top-bar-custom {
+      display: flex;
+      align-items: center;
+      padding: 20px;
+    }
+    .back-btn {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: white;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-primary);
+      text-decoration: none;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    .page-title {
+      flex: 1;
+      text-align: center;
+      font-size: 16px; font-weight: 700;
+      margin-right: 44px; 
+    }
+
+    .category-section {
+      padding: 0 20px;
+      margin-bottom: 24px;
+    }
+    .cat-label {
+      font-size: 11px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;
+    }
+    .cat-select {
+      display: flex; align-items: center; justify-content: space-between;
+      background: white; border-radius: 12px; padding: 12px 16px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+    }
+    .cat-select-left {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .cat-icon-small {
+      width: 24px; height: 24px; border-radius: 50%; background: #A9E4EA;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cat-text {
+      font-size: 14px; font-weight: 600; color: var(--text-primary);
+    }
+
+    /* ── White Card Container ───────────────────────────── */
+    .content-card {
+      background: white;
+      border-radius: 24px 24px 0 0;
+      padding: 20px;
+      min-height: 500px;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.03);
+    }
+
+    .tech-list-item {
+      display: flex;
+      align-items: center;
+      padding: 16px;
+      border-radius: 16px;
+      margin-bottom: 12px;
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+    .tech-list-item.selected {
+      background: rgba(169, 228, 234, 0.25);
+    }
+
+    .tech-photo {
+      width: 64px; height: 64px; border-radius: 16px;
+      background-size: cover; background-position: center; background-color: #ccc;
+      margin-right: 16px;
+    }
+    .tech-info {
+      flex: 1;
+    }
+    .tech-name { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 2px;}
+    .tech-stars { display: flex; gap: 2px; color: #FFC107; margin-bottom: 4px; }
+    .tech-stars svg { width: 10px; height: 10px; }
+    
+    .tech-meta {
+      display: flex; align-items: center; gap: 4px;
+      font-size: 10px; color: var(--text-secondary); margin-bottom: 2px;
+    }
+    .tech-meta svg { width: 12px; height: 12px; color: var(--primary); }
+
+    .tech-right {
+      display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between;
+      height: 64px;
+    }
+    .spec-icons { display: flex; gap: 4px; }
+    .spec-icons svg { width: 14px; height: 14px; color: var(--primary); }
+
+    .custom-checkbox {
+      width: 20px; height: 20px; border-radius: 6px;
+      border: 2px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .tech-list-item.selected .custom-checkbox {
+      background: var(--primary-light);
+      border-color: var(--primary-light);
+      color: white;
+    }
+    .custom-checkbox svg { width: 12px; height: 12px; opacity: 0; }
+    .tech-list-item.selected .custom-checkbox svg { opacity: 1; }
+
+    .bottom-action {
+      position: fixed;
+      bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 100%; max-width: var(--max-w);
+      padding: 20px;
+      background: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <div class="top-bar-custom">
+      <a href="home.html" class="back-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </a>
+      <div class="page-title">Specialized Technician</div>
+    </div>
+
+    <div class="category-section">
+      <div class="cat-label">Select Category</div>
+      <div class="cat-select">
+        <div class="cat-select-left">
+          <div class="cat-icon-small">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#2F4273" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 14v4M8 14v4M16 14v4"/></svg>
+          </div>
+          <div class="cat-text">AC</div>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
+    </div>
+
+    <div class="content-card" style="padding-bottom: 120px;">
+      
+      <div class="tech-list-item selected" onclick="selectTech(this)">
+        <div class="tech-photo" style="background-color: #6da2b8;"></div>
+        <div class="tech-info">
+          <div class="tech-name">Ahmed Rush</div>
+          <div class="tech-stars">
+            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" style="color: #D0E3E8;"><path fill="currentColor" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <div class="tech-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Location ± 2 Km
+          </div>
+          <div class="tech-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            Price Range Rp50.000 - Rp 200.000
+          </div>
+        </div>
+        <div class="tech-right">
+          <div class="spec-icons">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 14v4M8 14v4M16 14v4"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M5 10h14M9 6v2M9 14v2"/></svg>
+          </div>
+          <div class="custom-checkbox">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="tech-list-item" onclick="selectTech(this)">
+        <div class="tech-photo" style="background-color: #3b5998;"></div>
+        <div class="tech-info">
+          <div class="tech-name">Evan Bran</div>
+          <div class="tech-stars">
+            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" style="color: #D0E3E8;"><path fill="currentColor" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <div class="tech-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Location ± 5 Km
+          </div>
+          <div class="tech-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            Price Range Rp75.000 - Rp 270.000
+          </div>
+        </div>
+        <div class="tech-right">
+          <div class="spec-icons">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 14v4M8 14v4M16 14v4"/></svg>
+          </div>
+          <div class="custom-checkbox">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="bottom-action">
+      <button class="btn btn-primary btn-block" onclick="window.location.href='order.html'" style="border-radius: 40px; padding: 18px;">Meet Technician</button>
+    </div>
+  </div>
+
+  <script>
+    function selectTech(el) {
+      document.querySelectorAll('.tech-list-item').forEach(i => i.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+  </script>
+</body>
+</html>

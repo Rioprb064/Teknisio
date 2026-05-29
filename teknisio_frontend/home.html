@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Home — Teknisio</title>
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    /* ── Header ───────────────────────────── */
+    .home-header {
+      padding: 24px 20px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .user-avatar {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .location-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      flex: 1;
+      padding-left: 12px;
+    }
+
+    .location-label {
+      font-size: 11px;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 2px;
+      font-weight: 600;
+    }
+
+    .location-text {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .notif-btn {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: white;
+      border: 1px solid #E2E8F0;
+      display: flex; align-items: center; justify-content: center;
+      color: #2F4273;
+      position: relative;
+    }
+
+    /* ── Section Titles ───────────────────────────── */
+    .section-title-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding: 0 20px;
+    }
+    .section-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: #1D1D1D;
+    }
+    .see-all {
+      font-size: 11px;
+      font-weight: 400;
+      color: #1D1D1D;
+      cursor: pointer;
+    }
+
+    /* ── Categories ───────────────────────────── */
+    .content-card {
+      background: #FCFDF8;
+      border-radius: 11px;
+      border: 1px solid rgba(0,0,0,0.15);
+      margin: 0 20px;
+      padding: 16px;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px 8px;
+    }
+
+    .cat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .cat-icon-circle {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: rgba(169, 228, 234, 0.45);
+      display: flex; align-items: center; justify-content: center;
+      color: #2F4273;
+    }
+
+    .cat-icon-circle svg {
+      width: 20px; height: 20px;
+      stroke-width: 1.25;
+    }
+
+    .cat-label {
+      font-size: 11px;
+      font-weight: 400;
+      color: #1D1D1D;
+      text-align: center;
+      line-height: 1.3;
+    }
+
+
+
+    /* ── Technician Carousel ───────────────────────────── */
+    .tech-carousel {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 10px 20px 24px;
+    }
+
+    /* Inactive card wrapper */
+    .tech-card-wrapper {
+      position: relative;
+      flex-shrink: 0;
+      width: 111px;
+      height: 126px;
+      z-index: 1;
+      transition: all 0.3s ease;
+    }
+
+    /* Active (center) card wrapper - overlaps side cards by ~8px */
+    .tech-card-wrapper.active {
+      width: 156px;
+      height: 156px;
+      z-index: 10;
+      margin: 0 -8px;
+    }
+
+    /* The card itself - photo background */
+    .tech-card {
+      width: 100%;
+      height: 100%;
+      border-radius: 5px;
+      background-size: cover;
+      background-position: center top;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    /* Inactive card overlay - muted gray-teal tint */
+    .tech-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 5px;
+      background: radial-gradient(92.63% 92.63% at 50% 16.67%, rgba(227, 245, 246, 0.352) 0%, rgba(148, 165, 166, 0.55) 63.98%, rgba(148, 165, 166, 0.55) 86.62%);
+      transition: background 0.3s ease;
+    }
+
+    /* Active card - teal gradient overlay + border + shadow */
+    .tech-card-wrapper.active .tech-card {
+      border: 1px solid rgba(60, 150, 159, 0.26);
+      box-shadow: 0px 1px 4px 2px rgba(47, 66, 115, 0.25);
+    }
+    .tech-card-wrapper.active .tech-card::after {
+      background: radial-gradient(92.63% 92.63% at 50% 16.67%, rgba(72, 199, 212, 0.64) 0%, #3899A3 63.98%, #3899A3 86.62%, rgba(72, 199, 212, 0.76) 100%);
+    }
+
+    /* Stars row - hidden on inactive, shown on active */
+    .tech-card-top {
+      position: absolute;
+      top: 8px; left: 8px; right: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 2;
+      color: white;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .tech-card-wrapper.active .tech-card-top { opacity: 1; }
+
+    .tech-stars { display: flex; gap: 1px; }
+    .tech-stars svg { width: 9.75px; height: 9.75px; }
+    .tech-distance { font-size: 8px; font-weight: 400; color: white; }
+
+    /* Card content area */
+    .tech-card-content {
+      position: absolute;
+      bottom: 8px; left: 8px; right: 8px;
+      z-index: 2;
+      color: white;
+    }
+
+    /* Name text */
+    .tech-card-content .name {
+      font-size: 10px;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 2px;
+      transition: font-size 0.3s;
+    }
+    .tech-card-wrapper.active .tech-card-content .name {
+      font-size: 13px;
+      margin-bottom: 3px;
+    }
+
+    /* Price - only active */
+    .tech-card-content .price {
+      font-size: 8px;
+      font-weight: 400;
+      color: white;
+      display: none;
+      margin-bottom: 5px;
+    }
+    .tech-card-wrapper.active .tech-card-content .price { display: block; }
+
+    /* Bottom row: icons + More Info */
+    .tech-card-content .bottom-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .tech-card-content .icons { display: flex; gap: 4px; }
+
+    /* Inactive icon circles: 14px */
+    .icon-circle {
+      width: 14px;
+      height: 14px;
+      border-radius: 7.18px;
+      background: #FCFDF8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #2F4273;
+      flex-shrink: 0;
+    }
+    .icon-circle svg { width: 8px; height: 8px; }
+
+    /* Active icon circles: 20px */
+    .tech-card-wrapper.active .icon-circle {
+      width: 20px;
+      height: 20px;
+      border-radius: 10px;
+    }
+    .tech-card-wrapper.active .icon-circle svg { width: 12px; height: 12px; }
+
+    /* More Info button - only active, Figma: border-radius 5px 0px */
+    .btn-more-info {
+      display: none;
+      background: rgba(47, 66, 115, 0.7);
+      padding: 5px 8px;
+      border-radius: 5px 0px;
+      font-size: 8px;
+      font-weight: 400;
+      color: white;
+      text-decoration: none;
+      align-items: center;
+      gap: 3px;
+      white-space: nowrap;
+    }
+    .tech-card-wrapper.active .btn-more-info { display: flex; }
+
+    /* ── News ───────────────────────────── */
+    .news-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      background: white; margin: 0 20px; border-radius: 12px; padding: 16px;
+      border: 1px solid #E5E9F0;
+    }
+    .news-item {
+      display: flex; gap: 12px; align-items: center;
+      text-decoration: none; border-bottom: 1px solid #F0F2F5; padding-bottom: 16px;
+    }
+    .news-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .news-img {
+      width: 60px; height: 60px; border-radius: 8px;
+      object-fit: cover; flex-shrink: 0;
+    }
+
+    .news-text { flex: 1; }
+    .news-title { font-size: 12px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+    .news-desc { font-size: 10px; color: var(--text-secondary); margin-bottom: 6px; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+    .news-date { font-size: 9px; color: var(--text-muted); font-weight: 600; }
+
+    /* ── Bottom Nav ───────────────────────────── */
+    .bottom-nav-custom {
+      position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+      width: calc(100% - 40px); max-width: 362px;
+      background: linear-gradient(180deg, rgba(169,228,234,0.45) 0%, rgba(60,150,159,0.26) 100%);
+      height: 76px; border-radius: 27px;
+      display: flex; justify-content: space-around; align-items: center;
+      box-shadow: 0px 3px 4px rgba(0,0,0,0.25); z-index: 100;
+      padding: 0 10px;
+    }
+    .nav-item-custom {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 2px; text-decoration: none; color: rgba(29,29,29,0.92); flex: 1; height: 100%;
+    }
+    .nav-item-custom.active { color: #2F4273; }
+    .nav-item-custom svg { width: 24px; height: 24px; stroke-width: 1.5; }
+    .nav-item-custom span { font-size: 11px; font-weight: 400; }
+
+  </style>
+</head>
+<body style="background: #E9F0F4;">
+  <div class="app-shell" style="padding-bottom: 120px;">
+    
+    <!-- Header -->
+    <div class="home-header">
+      <img src="https://i.pravatar.cc/150?img=11" alt="User Avatar" class="user-avatar">
+      <div class="location-wrapper">
+        <div class="location-label">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          My Location
+        </div>
+        <div class="location-text">Intertip St., Medan</div>
+      </div>
+      <div class="notif-btn">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      </div>
+    </div>
+
+    <!-- Electronic Devices -->
+    <div class="section-title-wrapper" style="margin-top: 16px;">
+      <div class="section-title">Electronic Devices</div>
+    </div>
+    
+    <div class="content-card">
+      <div class="category-grid">
+        <a href="specialist.html" class="cat-item">
+          <div class="cat-icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 14v4M8 14v4M16 14v4"/></svg>
+          </div>
+          <div class="cat-label">AC</div>
+        </a>
+        <a href="specialist.html" class="cat-item">
+          <div class="cat-icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M5 10h14M9 6v2M9 14v2"/></svg>
+          </div>
+          <div class="cat-label">Fridge</div>
+        </a>
+        <a href="specialist.html" class="cat-item">
+          <div class="cat-icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><rect x="2" y="4" width="20" height="16" rx="2"/><circle cx="12" cy="13" r="3"/><path d="M6 8h1M9 8h1"/></svg>
+          </div>
+          <div class="cat-label">Washing<br/>Machine</div>
+        </a>
+        <a href="specialist.html" class="cat-item">
+          <div class="cat-icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><path d="M4 2h16v5H4zM6 7v13a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7M12 11v4M10 13h4"/></svg>
+          </div>
+          <div class="cat-label">Rice<br/>Cooker</div>
+        </a>
+        <a href="specialist.html" class="cat-item">
+          <div class="cat-icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 9h10M7 13h5"/><circle cx="16" cy="13" r="2"/></svg>
+          </div>
+          <div class="cat-label">Oven</div>
+        </a>
+        <a href="specialist.html" class="cat-item">
+          <div class="cat-icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><rect x="2" y="7" width="20" height="12" rx="2" ry="2"/><polyline points="8 2 12 7 16 2"/></svg>
+          </div>
+          <div class="cat-label">TV</div>
+        </a>
+        <a href="specialist.html" class="cat-item">
+          <div class="cat-icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          </div>
+          <div class="cat-label">Electric<br/>Fan</div>
+        </a>
+        <a href="specialist.html" class="cat-item">
+          <div class="cat-icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"><path d="M6 2v9a6 6 0 0 0 12 0V2"/><path d="M12 14v8"/><path d="M9 22h6"/></svg>
+          </div>
+          <div class="cat-label">Mixer</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Technician Nearby -->
+    <div class="section-title-wrapper" style="margin-top: 32px;">
+      <div class="section-title">Technician Nearby</div>
+      <div class="see-all">See All</div>
+    </div>
+    
+    <div class="tech-carousel" id="techCarousel">
+      
+      <!-- Card 1 (Charlie Hugh) -->
+      <div class="tech-card-wrapper">
+        <div class="tech-card" style="background-image: url('assets/Charlie Hugh.png');">
+          <div class="tech-card-top">
+            <div class="tech-stars">
+              <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" style="color: rgba(255,255,255,0.5)"><path fill="currentColor" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <div class="tech-distance">± 2 Km</div>
+          </div>
+          <div class="tech-card-content">
+            <div class="name">Charlie Hugh</div>
+            <div class="price">Rp50.000 - Rp 200.000</div>
+            <div class="bottom-row">
+              <div class="icons">
+                <div class="icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="12" rx="2" ry="2"/><polyline points="8 2 12 7 16 2"/></svg></div>
+                <div class="icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14h16M7 14v4a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-4M9 10h6M11 6h2M12 2v4"/></svg></div>
+              </div>
+              <a href="technician_detail.html" class="btn-more-info">More Info <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 (Ahmed Rush) -->
+      <div class="tech-card-wrapper">
+        <div class="tech-card" style="background-image: url('assets/Ahmed Rush.png');">
+          <div class="tech-card-top">
+            <div class="tech-stars">
+              <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" style="color: rgba(255,255,255,0.5)"><path fill="currentColor" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <div class="tech-distance">± 2 Km</div>
+          </div>
+          <div class="tech-card-content">
+            <div class="name">Ahmed Rush</div>
+            <div class="price">Rp50.000 - Rp 200.000</div>
+            <div class="bottom-row">
+              <div class="icons">
+                <div class="icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 14v4M8 14v4M16 14v4"/></svg></div>
+                <div class="icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M5 10h14M9 6v2M9 14v2"/></svg></div>
+              </div>
+              <a href="technician_detail.html" class="btn-more-info">More Info <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 (Ben Adams) -->
+      <div class="tech-card-wrapper">
+        <div class="tech-card" style="background-image: url('assets/Ben Adams.png');">
+          <div class="tech-card-top">
+            <div class="tech-stars">
+              <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" style="color: rgba(255,255,255,0.5)"><path fill="currentColor" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <div class="tech-distance">± 2 Km</div>
+          </div>
+          <div class="tech-card-content">
+            <div class="name">Ben Adams</div>
+            <div class="price">Rp50.000 - Rp 200.000</div>
+            <div class="bottom-row">
+              <div class="icons">
+                <div class="icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16"/><circle cx="8" cy="7" r="1"/><circle cx="12" cy="7" r="1"/><circle cx="16" cy="7" r="1"/></svg></div>
+                <div class="icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="12" cy="12" r="4"/><path d="M12 8v0"/></svg></div>
+              </div>
+              <a href="technician_detail.html" class="btn-more-info">More Info <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- News -->
+    <div class="section-title-wrapper" style="margin-top: 12px;">
+      <div class="section-title">News</div>
+      <div class="see-all">See All</div>
+    </div>
+    
+    <div class="news-list">
+      <a href="#" class="news-item">
+        <img src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=200&q=80" alt="Kitchen Stove" class="news-img">
+        <div class="news-text">
+          <div class="news-title">Cara agar perabotan mu awet</div>
+          <div class="news-desc">Mari kita pahami bagaimana cara agar ...</div>
+          <div class="news-date">2 April 2026</div>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <a href="#" class="news-item">
+        <img src="https://images.unsplash.com/photo-1544724569-5f546fd6f2b6?w=200&q=80" alt="Wall Outlet" class="news-img">
+        <div class="news-text">
+          <div class="news-title">Waspada arus listrik dirumah mu</div>
+          <div class="news-desc">Hindari tindakan ini kalau kamu ga mau...</div>
+          <div class="news-date">2 April 2026</div>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav-custom">
+      <a href="home.html" class="nav-item-custom active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Home</span>
+      </a>
+      <a href="chat.html" class="nav-item-custom">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span>Chat</span>
+      </a>
+      <a href="history.html" class="nav-item-custom">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span>History</span>
+      </a>
+      <a href="profile.html" class="nav-item-custom">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Account</span>
+      </a>
+    </nav>
+
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const wrappers = document.querySelectorAll('.tech-card-wrapper');
+      // Static 3-card layout: always keep the middle card (index 1) active
+      wrappers.forEach((wrapper, index) => {
+        wrapper.classList.remove('active');
+        if (index === 1) wrapper.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
