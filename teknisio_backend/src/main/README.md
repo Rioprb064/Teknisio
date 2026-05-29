@@ -136,7 +136,7 @@ Target: backend punya struktur rapi, response seragam, error handling, repositor
   - ![Status](https://img.shields.io/badge/status-ongoing-blue?style=flat-square) `PermintaanLayananKategoriRepository`
   - ![finished](https://img.shields.io/badge/%5Blegacy%5D-lightgrey?style=flat-square) `JenisLayananRepository` tetap legacy
   - ![finished](https://img.shields.io/badge/%5Blegacy%5D-lightgrey?style=flat-square) `TeknisiLayananRepository` tetap legacy
-  
+
 - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) **BE-05 [MVP] Validasi koneksi database dan Flyway**
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `./gradlew clean build` sukses
   - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `./gradlew bootRun` sukses
@@ -328,17 +328,18 @@ Target: customer dan technician bisa melihat serta mengubah profil dasar. Techni
   - [ ] Validasi `phoneNumber` jika berubah
   - [ ] Response menggunakan field English
 
-- [ ] **BE-32 [MVP] Lihat profil technician**
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) **BE-32 [MVP] Lihat profil technician**
   - Endpoint untuk customer: `GET /api/customers/technicians/{technicianProfileId}`
-  - [ ] Return `technicianProfileId`
-  - [ ] Return `name`
-  - [ ] Return `profilePhoto`
-  - [ ] Return `availabilityStatus`
-  - [ ] Return `averageRating`
-  - [ ] Return `ratingCount`
-  - [ ] Return `totalJobs`
-  - [ ] Return `description`
-  - [ ] Return `supportedDeviceCategories`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return `technicianProfileId`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return `name`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return `profilePhoto`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return `availabilityStatus`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return `averageRating`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return `ratingCount`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return `totalJobs`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return `description`
+  - ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return `supportedDeviceCategories`
+  - Catatan: sudah diimplementasikan lebih awal pada flow technician discovery / BE-25
 
 - [ ] **BE-33 [MVP] Technician update status ketersediaan**
   - Endpoint: `PATCH /api/technicians/me/status`
@@ -846,94 +847,6 @@ Catatan: role `ADMIN` ada di backend, tapi fokus utama masih customer dan techni
   - [ ] Total completed request
   - [ ] Total waiting request
   - [ ] Rating rata-rata technician
-
----
-
-## Urutan Pengerjaan yang Disarankan
-
-- [ ] **Milestone 1 — Fondasi**
-  - [ ] BE-00
-  - [ ] BE-01
-  - [ ] BE-02
-  - [ ] BE-03
-  - [ ] BE-04
-  - [ ] BE-05
-
-- [ ] **Milestone 2 — Auth**
-  - [ ] BE-10
-  - [ ] BE-11
-  - [ ] BE-12
-  - [ ] BE-13
-  - [ ] BE-15
-  - [ ] BE-16
-  - [ ] BE-17
-
-- [ ] **Milestone 3 — Master Data dan Technician Search**
-  - [ ] BE-20
-  - [ ] BE-21
-  - [ ] BE-22
-  - [ ] BE-23
-  - [ ] BE-24
-  - [ ] BE-25
-
-- [ ] **Milestone 4 — Profil dan Keahlian Technician**
-  - [ ] BE-30
-  - [ ] BE-31
-  - [ ] BE-32
-  - [ ] BE-33
-  - [ ] BE-35
-  - [ ] BE-36
-  - [ ] BE-37
-
-- [ ] **Milestone 5 — Service Request Customer**
-  - [ ] BE-50
-  - [ ] BE-51
-  - [ ] BE-52
-  - [ ] BE-53
-  - [ ] BE-54
-  - [ ] BE-55
-
-- [ ] **Milestone 6 — Service Request Technician**
-  - [ ] BE-60
-  - [ ] BE-61
-  - [ ] BE-62
-  - [ ] BE-63
-  - [ ] BE-64
-  - [ ] BE-65
-  - [ ] BE-67
-
-- [ ] **Milestone 7 — Status dan Riwayat**
-  - [ ] BE-70
-  - [ ] BE-71
-  - [ ] BE-72
-  - [ ] BE-73
-  - [ ] BE-74
-
-- [ ] **Milestone 8 — Chat REST**
-  - [ ] BE-80
-  - [ ] BE-81
-  - [ ] BE-84
-
-- [ ] **Milestone 9 — Notifikasi**
-  - [ ] BE-90
-  - [ ] BE-91
-  - [ ] BE-92
-  - [ ] BE-94
-
-- [ ] **Milestone 10 — Review**
-  - [ ] BE-100
-  - [ ] BE-101
-  - [ ] BE-102
-  - [ ] BE-104
-  - [ ] BE-105
-
-- [ ] **Milestone 11 — Fitur Lanjutan**
-  - [ ] Refresh token
-  - [ ] Upload/media handling
-  - [ ] Filter technician lanjutan
-  - [ ] WebSocket chat
-  - [ ] WebSocket notifikasi
-  - [ ] Admin dashboard
 
 ---
 
