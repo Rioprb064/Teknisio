@@ -3184,6 +3184,9 @@ id bounceBoth
 id bounceEnd
 id bounceStart
 id btn_login
+id btn_register
+id btn_tab_customer
+id btn_tab_teknisi
 id btn_toggle_password
 id buttonPanel
 id cache_measures
@@ -3212,6 +3215,7 @@ id compress
 id confirm_button
 id constraint
 id container
+id container_deskripsi
 id content
 id contentPanel
 id contiguous
@@ -3265,8 +3269,12 @@ id end
 id endToStart
 id enterAlways
 id enterAlwaysCollapsed
+id et_alamat
+id et_deskripsi
 id et_email
+id et_nama
 id et_password
+id et_telepon
 id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
@@ -3283,6 +3291,7 @@ id fitXY
 id fixed
 id flip
 id floating
+id footer_area
 id forever
 id form_container
 id fragment_container_view_tag
@@ -3528,6 +3537,7 @@ id submenuarrow
 id submit_area
 id supportScrollUp
 id tabMode
+id tab_container
 id tag_accessibility_actions
 id tag_accessibility_clickable_spans
 id tag_accessibility_heading
@@ -3576,6 +3586,7 @@ id triangle
 id tvCategoryName
 id tvLocation
 id tv_error_message
+id tv_login_link
 id tv_register_link
 id unchecked
 id uniform
@@ -3716,6 +3727,7 @@ layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_login
 layout activity_main
+layout activity_register
 layout custom_dialog
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog

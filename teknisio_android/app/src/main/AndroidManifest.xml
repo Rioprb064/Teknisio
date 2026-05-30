@@ -22,6 +22,10 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
+            
+        <activity
+            android:name=".ui.auth.RegisterActivity"
+            android:exported="false" />
         
     </application>
 

@@ -24,4 +24,12 @@ public interface ApiService {
     // Otentikasi Login
     @POST("/api/auth/login")
     Call<LoginResponse> loginUser(@Body LoginRequest request);
+
+    // Register Customer
+    @POST("/api/auth/register/customer")
+    Call<com.teknisio.app.data.model.RegisterResponse> registerCustomer(@Body com.teknisio.app.data.model.RegisterCustomerRequest request);
+
+    // Register Teknisi
+    @POST("/api/auth/register/teknisi")
+    Call<com.teknisio.app.data.model.RegisterResponse> registerTeknisi(@Body com.teknisio.app.data.model.RegisterTeknisiRequest request);
 }

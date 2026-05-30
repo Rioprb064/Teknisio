@@ -37,6 +37,9 @@
         <activity
             android:name="com.teknisio.app.MainActivity"
             android:exported="false" />
+        <activity
+            android:name="com.teknisio.app.ui.auth.RegisterActivity"
+            android:exported="false" />
 
         <provider
             android:name="androidx.startup.InitializationProvider"

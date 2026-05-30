@@ -56,6 +56,12 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btn_login);
         btnTogglePassword = findViewById(R.id.btn_toggle_password);
         tvErrorMessage = findViewById(R.id.tv_error_message);
+        TextView tvRegisterLink = findViewById(R.id.tv_register_link);
+
+        // Navigasi ke RegisterActivity
+        tvRegisterLink.setOnClickListener(v -> {
+            startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+        });
 
         // Toggle Password
         btnTogglePassword.setOnClickListener(v -> {
