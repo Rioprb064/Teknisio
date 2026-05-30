@@ -11,6 +11,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.teknisio.app.R;
+import com.teknisio.app.data.api.ApiClient;
+import com.teknisio.app.data.api.ApiService;
+import com.teknisio.app.data.model.KategoriResponse;
+import java.util.List;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import android.widget.Toast;
 
 public class HomeFragment extends Fragment {
 
@@ -26,17 +34,34 @@ public class HomeFragment extends Fragment {
         rvTechnicians = view.findViewById(R.id.rvTechnicians);
 
         setupRecyclerViews();
-
-        // TODO: Panggil ApiService.getKategori() menggunakan Retrofit lalu set ke Adapter
+        fetchCategories();
 
         return view;
     }
 
+    private void fetchCategories() {
+        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        apiService.getKategori().enqueue(new Callback<List<KategoriResponse>>() {
+            @Override
+            public void onResponse(Call<List<KategoriResponse>> call, Response<List<KategoriResponse>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    KategoriAdapter adapter = new KategoriAdapter(response.body());
+                    rvCategories.setAdapter(adapter);
+                } else {
+                    Toast.makeText(getContext(), "Gagal memuat kategori", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<KategoriResponse>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void setupRecyclerViews() {
         rvCategories.setLayoutManager(new GridLayoutManager(getContext(), 4));
-        // rvCategories.setAdapter(new KategoriAdapter(kategoriList));
 
         rvTechnicians.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        // rvTechnicians.setAdapter(new TechnicianAdapter(technicianList));
     }
 }
