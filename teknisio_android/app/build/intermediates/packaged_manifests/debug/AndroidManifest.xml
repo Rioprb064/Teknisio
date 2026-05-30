@@ -22,7 +22,9 @@
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:debuggable="true"
         android:extractNativeLibs="false"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.Teknisio" >
         <activity
@@ -39,6 +41,12 @@
             android:exported="false" />
         <activity
             android:name="com.teknisio.app.ui.auth.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.teknisio.app.ui.technician.TechnicianDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.teknisio.app.ui.order.OrderActivity"
             android:exported="false" />
 
         <provider

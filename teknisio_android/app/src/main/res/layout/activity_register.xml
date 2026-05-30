@@ -28,7 +28,7 @@
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/ic_logo_teknisio"
+                android:src="@drawable/logo_teknisio"
                 android:layout_marginBottom="12dp"
                 android:contentDescription="Teknisio Logo" />
 
