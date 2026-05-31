@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -103,28 +102,43 @@ public class HomeFragment extends Fragment {
         rvNews.setAdapter(newsAdapter);
     }
 
-    // ── Kategori (from API) ────────────────────────────────────────────────
+    // ── Kategori (from API, with dummy fallback) ───────────────────────────
     private void fetchCategories() {
         rvCategories.setLayoutManager(new GridLayoutManager(getContext(), 4));
         rvCategories.setNestedScrollingEnabled(false);
+
+        // Show dummy data immediately so the grid is never empty
+        showDummyCategories();
 
         ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
         apiService.getKategori().enqueue(new Callback<List<KategoriResponse>>() {
             @Override
             public void onResponse(@NonNull Call<List<KategoriResponse>> call,
                                    @NonNull Response<List<KategoriResponse>> response) {
-                if (response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
                     KategoriAdapter adapter = new KategoriAdapter(response.body());
                     rvCategories.setAdapter(adapter);
-                } else {
-                    Toast.makeText(getContext(), "Gagal memuat kategori", Toast.LENGTH_SHORT).show();
                 }
+                // If API returns empty or error, dummy data already shown
             }
 
             @Override
             public void onFailure(@NonNull Call<List<KategoriResponse>> call, @NonNull Throwable t) {
-                Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                // Dummy data already shown, do nothing
             }
         });
+    }
+
+    /** Show pre-built dummy categories so the grid is always populated */
+    private void showDummyCategories() {
+        List<KategoriResponse> dummyList = new ArrayList<>();
+        String[] names = {"TV", "AC", "Kulkas", "Mesin Cuci", "Oven", "Rice Cooker", "Laptop", "Lainnya"};
+        for (String name : names) {
+            KategoriResponse k = new KategoriResponse();
+            k.setNamaKategori(name);
+            dummyList.add(k);
+        }
+        KategoriAdapter adapter = new KategoriAdapter(dummyList);
+        rvCategories.setAdapter(adapter);
     }
 }

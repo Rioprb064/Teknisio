@@ -112,6 +112,11 @@ public class LoginActivity extends AppCompatActivity {
                         loginResponse.getIdUser(),
                         loginResponse.getNama()
                     );
+                    // Simpan email dari response
+                    sessionManager.saveUserProfile(
+                        loginResponse.getEmail() != null ? loginResponse.getEmail() : "",
+                        ""
+                    );
 
                     Toast.makeText(LoginActivity.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
                     

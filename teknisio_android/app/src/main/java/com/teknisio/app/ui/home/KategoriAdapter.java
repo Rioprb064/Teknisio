@@ -3,6 +3,7 @@ package com.teknisio.app.ui.home;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,8 +30,7 @@ public class KategoriAdapter extends RecyclerView.Adapter<KategoriAdapter.Katego
     public void onBindViewHolder(@NonNull KategoriViewHolder holder, int position) {
         KategoriResponse kategori = kategoriList.get(position);
         holder.tvCategoryName.setText(kategori.getNamaKategori());
-        // For icon, we'll keep the placeholder ic_nav_home for now 
-        // until we add image loading (like Glide) in the future if icons are URLs.
+        holder.ivCategoryIcon.setImageResource(getIconForCategory(kategori.getNamaKategori()));
     }
 
     @Override
@@ -38,12 +38,28 @@ public class KategoriAdapter extends RecyclerView.Adapter<KategoriAdapter.Katego
         return kategoriList != null ? kategoriList.size() : 0;
     }
 
+    /** Map category name to a local drawable icon resource */
+    private int getIconForCategory(String name) {
+        if (name == null) return R.drawable.ic_cat_default;
+        String lower = name.toLowerCase();
+        if (lower.contains("tv") || lower.contains("televisi")) return R.drawable.ic_cat_tv;
+        if (lower.contains("ac") || lower.contains("air condition")) return R.drawable.ic_cat_ac;
+        if (lower.contains("kulkas") || lower.contains("fridge") || lower.contains("refriger")) return R.drawable.ic_cat_ac;
+        if (lower.contains("cuci") || lower.contains("washing")) return R.drawable.ic_cat_default;
+        if (lower.contains("oven") || lower.contains("kompor")) return R.drawable.ic_cat_tv;
+        if (lower.contains("laptop") || lower.contains("computer") || lower.contains("pc")) return R.drawable.ic_cat_tv;
+        if (lower.contains("rice") || lower.contains("cooker")) return R.drawable.ic_cat_default;
+        return R.drawable.ic_cat_default;
+    }
+
     static class KategoriViewHolder extends RecyclerView.ViewHolder {
         TextView tvCategoryName;
+        ImageView ivCategoryIcon;
 
         public KategoriViewHolder(@NonNull View itemView) {
             super(itemView);
             tvCategoryName = itemView.findViewById(R.id.tvCategoryName);
+            ivCategoryIcon = itemView.findViewById(R.id.ivCategoryIcon);
         }
     }
 }

@@ -27,8 +27,10 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.Teknisio" >
+
+        <!-- Onboarding is the new entry point -->
         <activity
-            android:name="com.teknisio.app.ui.auth.LoginActivity"
+            android:name="com.teknisio.app.ui.onboarding.OnboardingActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,6 +38,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.teknisio.app.ui.auth.LoginActivity"
+            android:exported="false" />
         <activity
             android:name="com.teknisio.app.MainActivity"
             android:exported="false" />
