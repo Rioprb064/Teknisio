@@ -41,3 +41,9 @@ management:
     web:
       exposure:
         include: health,info
+  metrics:
+    binders:
+      processor:
+        enabled: false
+      system:
+        enabled: false
