@@ -8,43 +8,23 @@ android {
 
     defaultConfig {
         applicationId "com.teknisio.app"
-        minSdk 24
+        minSdk 23
         targetSdk 34
         versionCode 1
         versionName "1.0"
+
+        buildConfigField "String", "BASE_URL", "\"https://steadfast-liberation-production-e36b.up.railway.app/\""
     }
 
     buildFeatures {
         buildConfig true
     }
 
-    flavorDimensions "environment"
-
-    productFlavors {
-        local {
-            dimension "environment"
-            buildConfigField "String", "BASE_URL", '"http://10.0.2.2:8080/"'
-        }
-
-        production {
-            dimension "environment"
-            buildConfigField "String", "BASE_URL", '"https://steadfast-liberation-production-e36b.up.railway.app/"'
-        }
-    }
-
     buildTypes {
-        debug {
-            debuggable true
-        }
-
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 

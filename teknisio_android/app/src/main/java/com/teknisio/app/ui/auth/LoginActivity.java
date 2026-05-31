@@ -17,10 +17,10 @@ import com.teknisio.app.MainActivity;
 import com.teknisio.app.R;
 import com.teknisio.app.data.api.ApiClient;
 import com.teknisio.app.data.api.ApiService;
-import com.teknisio.app.data.model.LoginRequest;
 import com.teknisio.app.data.model.ApiResponse;
 import com.teknisio.app.data.model.AuthResponse;
 import com.teknisio.app.data.model.AuthUserResponse;
+import com.teknisio.app.data.model.LoginRequest;
 import com.teknisio.app.utils.SessionManager;
 
 import retrofit2.Call;
@@ -28,24 +28,22 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
-
     private EditText etEmail;
     private EditText etPassword;
     private Button btnLogin;
     private ImageButton btnTogglePassword;
     private TextView tvErrorMessage;
-    
+
     private boolean isPasswordVisible = false;
     private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         sessionManager = new SessionManager(this);
-        
-        // Auto-login jika sudah ada token
-        if (sessionManager.getToken() != null) {
+
+        if (sessionManager.isLoggedIn()) {
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
             return;
@@ -58,26 +56,15 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btn_login);
         btnTogglePassword = findViewById(R.id.btn_toggle_password);
         tvErrorMessage = findViewById(R.id.tv_error_message);
+
         TextView tvRegisterLink = findViewById(R.id.tv_register_link);
 
-        // Navigasi ke RegisterActivity
         tvRegisterLink.setOnClickListener(v -> {
             startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
         });
 
-        // Toggle Password
-        btnTogglePassword.setOnClickListener(v -> {
-            if (isPasswordVisible) {
-                etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                isPasswordVisible = false;
-            } else {
-                etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                isPasswordVisible = true;
-            }
-            etPassword.setSelection(etPassword.getText().length());
-        });
+        btnTogglePassword.setOnClickListener(v -> togglePasswordVisibility());
 
-        // Proses Login
         btnLogin.setOnClickListener(v -> {
             String email = etEmail.getText().toString().trim();
             String password = etPassword.getText().toString().trim();
@@ -92,9 +79,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void performLogin(String email, String password) {
-        tvErrorMessage.setVisibility(View.GONE);
-        btnLogin.setEnabled(false);
-        btnLogin.setText("Sedang memproses...");
+        hideError();
+        setLoading(true);
 
         ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
         LoginRequest request = new LoginRequest(email, password);
@@ -102,8 +88,7 @@ public class LoginActivity extends AppCompatActivity {
         apiService.login(request).enqueue(new Callback<ApiResponse<AuthResponse>>() {
             @Override
             public void onResponse(Call<ApiResponse<AuthResponse>> call, Response<ApiResponse<AuthResponse>> response) {
-                btnLogin.setEnabled(true);
-                btnLogin.setText("Confirm");
+                setLoading(false);
 
                 if (!response.isSuccessful() || response.body() == null) {
                     showError("Login gagal. Periksa kembali kredensial Anda.");
@@ -114,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (!apiResponse.isSuccess() || apiResponse.getData() == null) {
                     String message = apiResponse.getMessage();
-                    showError(message != null ? message : "Login gagal. Periksa kembali kredensial Anda.");
+                    showError(message != null ? message : "Login gagal.");
                     return;
                 }
 
@@ -126,37 +111,57 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-                // Simpan sesi
+                if (!"CUSTOMER".equals(user.getRole())) {
+                    showError("Login berhasil, tetapi dashboard untuk role " + user.getRole() + " belum tersedia di aplikasi mobile ini.");
+                    sessionManager.clearSession();
+                    return;
+                }
+
                 sessionManager.saveAuthSession(
                     authResponse.getAccessToken(),
-                    user.getUserId(),
-                    user.getName()
+                    authResponse.getTokenType(),
+                    authResponse.getExpiresInMs(),
+                    user
                 );
 
-                // Simpan email dan nomor telepon dari response backend
-                sessionManager.saveUserProfile(
-                    user.getEmail() != null ? user.getEmail() : "",
-                    user.getPhoneNumber() != null ? user.getPhoneNumber() : ""
-                );
+                Toast.makeText(LoginActivity.this, "Login berhasil", Toast.LENGTH_SHORT).show();
 
-                Toast.makeText(LoginActivity.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
-
-                // Pindah ke MainActivity
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();
             }
 
             @Override
             public void onFailure(Call<ApiResponse<AuthResponse>> call, Throwable t) {
-                btnLogin.setEnabled(true);
-                btnLogin.setText("Confirm");
+                setLoading(false);
                 showError("Gagal terhubung ke server: " + t.getMessage());
             }
         });
     }
 
+    private void togglePasswordVisibility() {
+        if (isPasswordVisible) {
+            etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            isPasswordVisible = false;
+        }
+        else {
+            etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            isPasswordVisible = true;
+        }
+
+        etPassword.setSelection(etPassword.getText().length());
+    }
+
+    private void setLoading(boolean loading) {
+        btnLogin.setEnabled(!loading);
+        btnLogin.setText(loading ? "Sedang memproses..." : "Confirm");
+    }
+
     private void showError(String message) {
         tvErrorMessage.setText(message);
         tvErrorMessage.setVisibility(View.VISIBLE);
+    }
+
+    private void hideError() {
+        tvErrorMessage.setVisibility(View.GONE);
     }
 }

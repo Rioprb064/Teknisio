@@ -3,48 +3,54 @@ package com.teknisio.app.data.model;
 import com.google.gson.annotations.SerializedName;
 
 public class RegisterTeknisiRequest {
-    @SerializedName("nama")
-    private String nama;
+    @SerializedName("name")
+    private String name;
 
     @SerializedName("email")
     private String email;
 
-    @SerializedName("noTelepon")
-    private String noTelepon;
+    @SerializedName("phoneNumber")
+    private String phoneNumber;
 
     @SerializedName("password")
     private String password;
 
-    @SerializedName("alamat")
-    private String alamat;
+    @SerializedName("address")
+    private String address;
 
-    @SerializedName("deskripsi")
-    private String deskripsi;
+    @SerializedName("description")
+    private String description;
 
-    public RegisterTeknisiRequest(String nama, String email, String noTelepon, String password, String alamat, String deskripsi) {
-        this.nama = nama;
+    public RegisterTeknisiRequest(String name, String email, String phoneNumber, String password, String address, String description) {
+        this.name = name;
         this.email = email;
-        this.noTelepon = noTelepon;
+        this.phoneNumber = phoneNumber;
         this.password = password;
-        this.alamat = alamat;
-        this.deskripsi = deskripsi;
+        this.address = address;
+        this.description = description;
     }
 
-    public String getNama() { return nama; }
-    public void setNama(String nama) { this.nama = nama; }
+    public String getName() {
+        return name;
+    }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public String getEmail() {
+        return email;
+    }
 
-    public String getNoTelepon() { return noTelepon; }
-    public void setNoTelepon(String noTelepon) { this.noTelepon = noTelepon; }
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
+    public String getPassword() {
+        return password;
+    }
 
-    public String getAlamat() { return alamat; }
-    public void setAlamat(String alamat) { this.alamat = alamat; }
+    public String getAddress() {
+        return address;
+    }
 
-    public String getDeskripsi() { return deskripsi; }
-    public void setDeskripsi(String deskripsi) { this.deskripsi = deskripsi; }
+    public String getDescription() {
+        return description;
+    }
 }

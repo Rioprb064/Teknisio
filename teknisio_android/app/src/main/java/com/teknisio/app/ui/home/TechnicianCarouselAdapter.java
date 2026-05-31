@@ -16,123 +16,162 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.teknisio.app.R;
-import com.teknisio.app.data.model.TeknisiModel;
+import com.teknisio.app.data.model.CustomerTechnicianResponse;
+import com.teknisio.app.data.model.DeviceCategoryResponse;
 import com.teknisio.app.ui.technician.TechnicianDetailActivity;
 
 import java.util.List;
 
 public class TechnicianCarouselAdapter extends RecyclerView.Adapter<TechnicianCarouselAdapter.TechViewHolder> {
 
-    private final List<TeknisiModel> dataList;
-    private int activeIndex = 1; // center card always starts active
+    private final List<CustomerTechnicianResponse> dataList;
+    private final String selectedDeviceCategoryId;
+    private final String selectedDeviceCategoryName;
 
-    public TechnicianCarouselAdapter(List<TeknisiModel> dataList) {
+    private int activeIndex = 0;
+
+    public TechnicianCarouselAdapter(List<CustomerTechnicianResponse> dataList, String selectedDeviceCategoryId, String selectedDeviceCategoryName) {
         this.dataList = dataList;
+        this.selectedDeviceCategoryId = selectedDeviceCategoryId;
+        this.selectedDeviceCategoryName = selectedDeviceCategoryName;
+
+        if (dataList != null && dataList.size() > 1) {
+            activeIndex = 1;
+        }
     }
 
     @NonNull
     @Override
     public TechViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_technician_card, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_technician_card, parent, false);
         return new TechViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TechViewHolder holder, int position) {
-        TeknisiModel teknisi = dataList.get(position);
-        boolean isActive = (position == activeIndex);
+        CustomerTechnicianResponse technician = dataList.get(position);
+
+        if (activeIndex >= getItemCount()) {
+            activeIndex = 0;
+        }
+
+        boolean isActive = position == activeIndex;
         Context ctx = holder.itemView.getContext();
 
-        // Set card size: active = 156dp x 156dp, inactive = 111dp x 126dp
         int widthDp = isActive ? 156 : 111;
         int heightDp = isActive ? 156 : 126;
         int width = dpToPx(ctx, widthDp);
         int height = dpToPx(ctx, heightDp);
 
         ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
-        if (lp == null) lp = new RecyclerView.LayoutParams(width, height);
+        if (lp == null) {
+            lp = new RecyclerView.LayoutParams(width, height);
+        }
+
         lp.width = width;
         lp.height = height;
-        // Overlap: negative margin to simulate overlap effect
+
         if (lp instanceof RecyclerView.LayoutParams) {
             int marginDp = isActive ? -8 : 0;
             ((RecyclerView.LayoutParams) lp).setMarginStart(dpToPx(ctx, marginDp));
             ((RecyclerView.LayoutParams) lp).setMarginEnd(dpToPx(ctx, marginDp));
         }
+
         holder.itemView.setLayoutParams(lp);
 
-        // Load photo
         Glide.with(ctx)
-                .load(teknisi.getFotoUrl())
-                .placeholder(R.drawable.ic_profile_placeholder)
-                .centerCrop()
-                .into(holder.ivPhoto);
+            .load(technician.getProfilePhoto())
+            .placeholder(R.drawable.ic_profile_placeholder)
+            .centerCrop()
+            .into(holder.ivPhoto);
 
-        // Name
-        holder.tvName.setText(teknisi.getNama());
-        int nameSizeSp = isActive ? 13 : 10;
-        holder.tvName.setTextSize(TypedValue.COMPLEX_UNIT_SP, nameSizeSp);
+        holder.tvName.setText(safe(technician.getName(), "Teknisi"));
+        holder.tvName.setTextSize(TypedValue.COMPLEX_UNIT_SP, isActive ? 13 : 10);
 
-        // Overlay
         if (isActive) {
-            // Teal gradient-like overlay: use a semi-transparent teal
             holder.vOverlay.setBackgroundColor(Color.parseColor("#993899A3"));
         } else {
             holder.vOverlay.setBackgroundColor(Color.parseColor("#8094A5A6"));
         }
 
-        // Active-only elements
         holder.layoutTop.setVisibility(isActive ? View.VISIBLE : View.GONE);
         holder.tvPrice.setVisibility(isActive ? View.VISIBLE : View.GONE);
         holder.tvMoreInfo.setVisibility(isActive ? View.VISIBLE : View.GONE);
 
+        String availability = safe(technician.getAvailabilityStatus(), "-");
+        holder.tvDistance.setText(availability);
+
         if (isActive) {
-            holder.tvPrice.setText(teknisi.getHargaRange());
-            // Stars
+            int totalJobs = technician.getTotalJobs() != null ? technician.getTotalJobs() : 0;
+            int ratingCount = technician.getRatingCount() != null ? technician.getRatingCount() : 0;
+            double rating = technician.getAverageRating() != null ? technician.getAverageRating() : 0.0;
+
+            holder.tvPrice.setText("Rating " + String.format("%.1f", rating) + " • " + totalJobs + " jobs");
+
             holder.layoutStars.removeAllViews();
-            int fullStars = (int) teknisi.getRating();
+
+            int fullStars = (int) Math.round(rating);
+            if (fullStars > 5) fullStars = 5;
+            if (fullStars < 0) fullStars = 0;
+
             for (int i = 0; i < 5; i++) {
                 ImageView star = new ImageView(ctx);
-                LinearLayout.LayoutParams slp = new LinearLayout.LayoutParams(dpToPx(ctx, 10), dpToPx(ctx, 10));
+                LinearLayout.LayoutParams slp = new LinearLayout.LayoutParams(
+                    dpToPx(ctx, 10),
+                    dpToPx(ctx, 10)
+                );
                 slp.setMarginEnd(dpToPx(ctx, 1));
                 star.setLayoutParams(slp);
                 star.setImageResource(i < fullStars ? R.drawable.ic_star : R.drawable.ic_star_empty);
                 holder.layoutStars.addView(star);
             }
-            // Click More Info → TechnicianDetailActivity
+
+            holder.tvMoreInfo.setText(ratingCount > 0 ? "More Info" : "Detail");
+
             holder.tvMoreInfo.setOnClickListener(v -> {
                 Intent intent = new Intent(ctx, TechnicianDetailActivity.class);
-                intent.putExtra("nama", teknisi.getNama());
-                intent.putExtra("fotoUrl", teknisi.getFotoUrl());
-                intent.putExtra("rating", teknisi.getRating());
-                intent.putExtra("jarak", teknisi.getJarak());
-                intent.putExtra("hargaMin", teknisi.getHargaMin());
-                intent.putExtra("hargaMax", teknisi.getHargaMax());
-                intent.putExtra("deskripsi", teknisi.getDeskripsi());
+
+                intent.putExtra("technicianProfileId", technician.getTechnicianProfileId());
+                intent.putExtra("deviceCategoryId", selectedDeviceCategoryId);
+                intent.putExtra("deviceCategoryName", selectedDeviceCategoryName);
+
+                // Legacy extras supaya TechnicianDetailActivity lama tetap bisa jalan.
+                intent.putExtra("nama", technician.getName());
+                intent.putExtra("fotoUrl", technician.getProfilePhoto());
+                intent.putExtra("rating", (float) rating);
+                intent.putExtra("jarak", availability);
+                intent.putExtra("deskripsi", technician.getDescription());
+
                 ctx.startActivity(intent);
             });
         }
 
-        // Small category icon circles (small white circles)
         holder.layoutIcons.removeAllViews();
-        List<String> spesialis = teknisi.getSpesialisasi();
+
+        List<DeviceCategoryResponse> categories = technician.getSupportedDeviceCategories();
+        int categoryCount = categories != null ? categories.size() : 0;
+
         int maxIcons = isActive ? 3 : 2;
         int iconSizeDp = isActive ? 20 : 14;
-        for (int i = 0; i < Math.min(spesialis.size(), maxIcons); i++) {
+        int totalIcons = Math.min(categoryCount, maxIcons);
+
+        for (int i = 0; i < totalIcons; i++) {
             View iconCircle = new View(ctx);
             int iconSize = dpToPx(ctx, iconSizeDp);
+
             LinearLayout.LayoutParams ilp = new LinearLayout.LayoutParams(iconSize, iconSize);
             ilp.setMarginEnd(dpToPx(ctx, 3));
+
             iconCircle.setLayoutParams(ilp);
             iconCircle.setBackgroundResource(R.drawable.bg_cat_icon_circle);
+
             holder.layoutIcons.addView(iconCircle);
         }
 
-        // Click on inactive card → set as active
         holder.itemView.setOnClickListener(v -> {
             int oldActive = activeIndex;
             activeIndex = position;
+
             notifyItemChanged(oldActive);
             notifyItemChanged(position);
         });
@@ -143,16 +182,28 @@ public class TechnicianCarouselAdapter extends RecyclerView.Adapter<TechnicianCa
         return dataList != null ? dataList.size() : 0;
     }
 
+    private String safe(String value, String fallback) {
+        return value != null && !value.trim().isEmpty() ? value : fallback;
+    }
+
     private int dpToPx(Context ctx, int dp) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
-                ctx.getResources().getDisplayMetrics());
+        return (int) TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            dp,
+            ctx.getResources().getDisplayMetrics()
+        );
     }
 
     static class TechViewHolder extends RecyclerView.ViewHolder {
         ImageView ivPhoto;
         View vOverlay;
-        LinearLayout layoutTop, layoutStars, layoutIcons;
-        TextView tvName, tvPrice, tvMoreInfo, tvDistance;
+        LinearLayout layoutTop;
+        LinearLayout layoutStars;
+        LinearLayout layoutIcons;
+        TextView tvName;
+        TextView tvPrice;
+        TextView tvMoreInfo;
+        TextView tvDistance;
 
         TechViewHolder(@NonNull View itemView) {
             super(itemView);
