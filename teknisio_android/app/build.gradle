@@ -14,7 +14,29 @@ android {
         versionName "1.0"
     }
 
+    buildFeatures {
+        buildConfig true
+    }
+
+    flavorDimensions "environment"
+
+    productFlavors {
+        local {
+            dimension "environment"
+            buildConfigField "String", "BASE_URL", '"http://10.0.2.2:8080/"'
+        }
+
+        production {
+            dimension "environment"
+            buildConfigField "String", "BASE_URL", '"https://steadfast-liberation-production-e36b.up.railway.app/"'
+        }
+    }
+
     buildTypes {
+        debug {
+            debuggable true
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'

@@ -18,7 +18,9 @@ import com.teknisio.app.R;
 import com.teknisio.app.data.api.ApiClient;
 import com.teknisio.app.data.api.ApiService;
 import com.teknisio.app.data.model.LoginRequest;
-import com.teknisio.app.data.model.LoginResponse;
+import com.teknisio.app.data.model.ApiResponse;
+import com.teknisio.app.data.model.AuthResponse;
+import com.teknisio.app.data.model.AuthUserResponse;
 import com.teknisio.app.utils.SessionManager;
 
 import retrofit2.Call;
@@ -97,39 +99,55 @@ public class LoginActivity extends AppCompatActivity {
         ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
         LoginRequest request = new LoginRequest(email, password);
 
-        apiService.loginUser(request).enqueue(new Callback<LoginResponse>() {
+        apiService.login(request).enqueue(new Callback<ApiResponse<AuthResponse>>() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            public void onResponse(Call<ApiResponse<AuthResponse>> call, Response<ApiResponse<AuthResponse>> response) {
                 btnLogin.setEnabled(true);
                 btnLogin.setText("Confirm");
 
-                if (response.isSuccessful() && response.body() != null) {
-                    LoginResponse loginResponse = response.body();
-                    
-                    // Simpan sesi
-                    sessionManager.saveAuthSession(
-                        loginResponse.getAccessToken(),
-                        loginResponse.getIdUser(),
-                        loginResponse.getNama()
-                    );
-                    // Simpan email dari response
-                    sessionManager.saveUserProfile(
-                        loginResponse.getEmail() != null ? loginResponse.getEmail() : "",
-                        ""
-                    );
-
-                    Toast.makeText(LoginActivity.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
-                    
-                    // Pindah ke MainActivity
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    finish();
-                } else {
+                if (!response.isSuccessful() || response.body() == null) {
                     showError("Login gagal. Periksa kembali kredensial Anda.");
+                    return;
                 }
+
+                ApiResponse<AuthResponse> apiResponse = response.body();
+
+                if (!apiResponse.isSuccess() || apiResponse.getData() == null) {
+                    String message = apiResponse.getMessage();
+                    showError(message != null ? message : "Login gagal. Periksa kembali kredensial Anda.");
+                    return;
+                }
+
+                AuthResponse authResponse = apiResponse.getData();
+                AuthUserResponse user = authResponse.getUser();
+
+                if (authResponse.getAccessToken() == null || user == null) {
+                    showError("Login gagal. Data login tidak lengkap.");
+                    return;
+                }
+
+                // Simpan sesi
+                sessionManager.saveAuthSession(
+                    authResponse.getAccessToken(),
+                    user.getUserId(),
+                    user.getName()
+                );
+
+                // Simpan email dan nomor telepon dari response backend
+                sessionManager.saveUserProfile(
+                    user.getEmail() != null ? user.getEmail() : "",
+                    user.getPhoneNumber() != null ? user.getPhoneNumber() : ""
+                );
+
+                Toast.makeText(LoginActivity.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
+
+                // Pindah ke MainActivity
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                finish();
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<AuthResponse>> call, Throwable t) {
                 btnLogin.setEnabled(true);
                 btnLogin.setText("Confirm");
                 showError("Gagal terhubung ke server: " + t.getMessage());
