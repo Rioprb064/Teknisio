@@ -1192,85 +1192,242 @@ Catatan:
 
 - Karena customer sudah memilih technician sebelum membuat request, technician tidak mengambil request bebas dari kategori.
 - Request masuk adalah request yang `technicianProfileId`-nya sama dengan technician login.
+- Semua endpoint pada modul ini hanya untuk role `TECHNICIAN`.
+- Semua perubahan status mengikuti flow database: `WAITING → ACCEPTED / REJECTED / CANCELLED`, `ACCEPTED → ON_PROGRESS / CANCELLED`, dan `ON_PROGRESS → COMPLETED / CANCELLED`.
+- Timestamp status seperti `acceptedAt`, `startedAt`, `completedAt`, `cancelledAt`, dan `rejectedAt` diisi otomatis oleh trigger database.
+- Status history juga dibuat otomatis oleh trigger database; Java service tidak insert `RiwayatStatus` manual.
 
 ---
 
-## BE-50 [NEXT] Technician lihat request masuk / request miliknya
+## BE-50 [MVP] Technician lihat request masuk / request miliknya
 
-- ![ongoing](https://img.shields.io/badge/%5Bongoing%5D-blue?style=flat-square) Next immediate setelah BE-43 selesai
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square)(https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Endpoint: `GET /api/technicians/service-requests`
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Hanya technician login
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Customer token return `403`
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Tanpa token return `401`
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Ambil `TeknisiProfile` dari user login
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Tampilkan request untuk technician tersebut
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Bisa filter status `WAITING`, `ACCEPTED`, `ON_PROGRESS`, `COMPLETED`, `CANCELLED`, `REJECTED`
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Sort `latest` atau `oldest`
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Sertakan customer summary
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Sertakan selected device categories
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Endpoint: `GET /api/technicians/service-requests`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Hanya technician login
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Customer token return `403`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Tanpa token return `401`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Ambil `TeknisiProfile` dari user login
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Tampilkan request untuk technician tersebut
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Bisa filter status `WAITING`, `ACCEPTED`, `ON_PROGRESS`, `COMPLETED`, `CANCELLED`, `REJECTED`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Status filter menerima lowercase dan dinormalisasi ke enum
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Invalid status return `400`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Sort `latest` atau `oldest`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Invalid sort return `400`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Default sort `latest`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Sertakan customer summary: `customerId`, `customerName`, `customerPhoneNumber`, `customerProfilePhoto`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Sertakan selected device categories
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Sertakan status timestamp dan alasan cancel/reject
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Sudah masuk strict regression test `develop/api-smoke-test.sh` V5
 
-Planned contract:
+Contract:
 
 ```http
 GET /api/technicians/service-requests?status=WAITING&sort=latest
 Authorization: Bearer {technicianToken}
 ```
 
+Success `200`:
+
+```json
+{
+  "success": true,
+  "message": "Service requests retrieved successfully",
+  "data": [
+    {
+      "serviceRequestId": "uuid",
+      "serviceRequestCode": "REQ-20260531-XXXXXXXX",
+      "customerId": "uuid",
+      "customerName": "Customer Demo",
+      "customerPhoneNumber": "+6281234567890",
+      "customerProfilePhoto": null,
+      "technicianProfileId": "uuid",
+      "status": "WAITING",
+      "issueDescription": "AC tidak dingin",
+      "address": "Jl. Contoh No. 123",
+      "addressDetail": "Rumah pagar hitam",
+      "estimatedCost": null,
+      "finalCost": null,
+      "technicianNote": null,
+      "cancelReason": null,
+      "rejectReason": null,
+      "selectedDeviceCategories": [
+        {
+          "deviceCategoryId": "6e6349a8-e528-4a38-8b1a-6123c4f1c40d",
+          "name": "Air Conditioner",
+          "icon": "air-conditioner"
+        }
+      ],
+      "requestTime": "2026-05-31T08:00:00Z",
+      "acceptedAt": null,
+      "startedAt": null,
+      "completedAt": null,
+      "cancelledAt": null,
+      "rejectedAt": null
+    }
+  ],
+  "errors": null
+}
+```
+
 ---
 
 ## BE-51 [MVP] Technician lihat detail request
 
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Endpoint: `GET /api/technicians/service-requests/{serviceRequestId}`
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Validasi technician adalah technician yang dipilih pada request
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Jika bukan milik technician login return `404`
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Return data customer
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Return lokasi
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Return `selectedDeviceCategories`
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Return `issueDescription`
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Return status
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Return status history jika dibutuhkan
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Endpoint: `GET /api/technicians/service-requests/{serviceRequestId}`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Hanya technician login
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Customer token return `403`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Tanpa token return `401`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Validasi `serviceRequestId` harus UUID
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Jika UUID invalid return `400`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Jika request tidak ditemukan return `404`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Jika request bukan milik technician login return `404`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Validasi technician adalah technician yang dipilih pada request
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return data customer
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return lokasi
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return `selectedDeviceCategories`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return `issueDescription`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return status
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return `estimatedCost`, `finalCost`, dan `technicianNote`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Return `cancelReason`, `rejectReason`, dan semua timestamp status
+- ![deferred](https://img.shields.io/badge/%5Bdeferred%5D-lightgrey?style=flat-square) Status history detail dipisah ke BE-62
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Sudah masuk strict regression test `develop/api-smoke-test.sh` V5
 
-Planned contract:
+Contract:
 
 ```http
 GET /api/technicians/service-requests/{serviceRequestId}
 Authorization: Bearer {technicianToken}
 ```
 
+Success `200`:
+
+```json
+{
+  "success": true,
+  "message": "Service request retrieved successfully",
+  "data": {
+    "serviceRequestId": "uuid",
+    "serviceRequestCode": "REQ-20260531-XXXXXXXX",
+    "customerId": "uuid",
+    "customerName": "Customer Demo",
+    "customerPhoneNumber": "+6281234567890",
+    "customerProfilePhoto": null,
+    "technicianProfileId": "uuid",
+    "status": "WAITING",
+    "issueDescription": "AC tidak dingin",
+    "address": "Jl. Contoh No. 123",
+    "addressDetail": "Rumah pagar hitam",
+    "estimatedCost": null,
+    "finalCost": null,
+    "technicianNote": null,
+    "cancelReason": null,
+    "rejectReason": null,
+    "selectedDeviceCategories": [],
+    "requestTime": "2026-05-31T08:00:00Z",
+    "acceptedAt": null,
+    "startedAt": null,
+    "completedAt": null,
+    "cancelledAt": null,
+    "rejectedAt": null
+  },
+  "errors": null
+}
+```
+
 ---
 
 ## BE-52 [MVP] Technician accept request
 
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Endpoint: `PATCH /api/technicians/service-requests/{serviceRequestId}/accept`
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Hanya technician login
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Request harus `WAITING`
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Request harus ditujukan ke technician login
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Validasi technician masih memiliki semua skill untuk selectedDeviceCategories
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Set status `ACCEPTED`
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Isi `diubahOlehTerakhir`
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) DB trigger otomatis isi `waktuDiterima`
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) DB trigger otomatis insert status history
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Endpoint: `PATCH /api/technicians/service-requests/{serviceRequestId}/accept`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Hanya technician login
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Customer token return `403`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Tanpa token return `401`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Validasi `serviceRequestId` harus UUID
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Jika UUID invalid return `400`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Jika request tidak ditemukan return `404`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Jika request bukan milik technician login return `404`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Request harus `WAITING`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Jika request bukan `WAITING`, return `409`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Request harus ditujukan ke technician login
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Validasi technician masih memiliki semua skill untuk selectedDeviceCategories
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Jika skill tidak aktif / sudah dihapus, return `409`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Set status `ACCEPTED`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Isi `diubahOlehTerakhir`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) DB trigger otomatis isi `waktuDiterima` / `acceptedAt`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) DB trigger otomatis insert status history
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Sudah masuk strict regression test `develop/api-smoke-test.sh` V5
 
-Planned contract:
+Contract:
 
 ```http
 PATCH /api/technicians/service-requests/{serviceRequestId}/accept
 Authorization: Bearer {technicianToken}
 ```
 
+Success `200`:
+
+```json
+{
+  "success": true,
+  "message": "Service request accepted successfully",
+  "data": {
+    "serviceRequestId": "uuid",
+    "serviceRequestCode": "REQ-20260531-XXXXXXXX",
+    "technicianProfileId": "uuid",
+    "status": "ACCEPTED",
+    "acceptedAt": "2026-05-31T08:00:00Z",
+    "startedAt": null,
+    "completedAt": null,
+    "cancelledAt": null,
+    "rejectedAt": null
+  },
+  "errors": null
+}
+```
+
+Important error cases:
+
+```json
+{
+  "success": false,
+  "message": "Service request cannot be accepted from status ACCEPTED",
+  "data": null,
+  "errors": null
+}
+```
+
+```json
+{
+  "success": false,
+  "message": "Technician does not support selected device category: Air Conditioner",
+  "data": null,
+  "errors": null
+}
+```
+
 ---
 
 ## BE-53 [MVP] Technician reject request
 
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Endpoint: `PATCH /api/technicians/service-requests/{serviceRequestId}/reject`
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Request harus `WAITING`
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Request harus ditujukan ke technician login
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Simpan `rejectReason` jika ada
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Status menjadi `REJECTED`
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) DB trigger otomatis isi `waktuDitolak`
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) DB trigger otomatis insert status history
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Endpoint: `PATCH /api/technicians/service-requests/{serviceRequestId}/reject`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Hanya technician login
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Customer token return `403`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Tanpa token return `401`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Validasi `serviceRequestId` harus UUID
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Jika UUID invalid return `400`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Jika request tidak ditemukan return `404`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Jika request bukan milik technician login return `404`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Request harus `WAITING`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Jika request bukan `WAITING`, return `409`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Request harus ditujukan ke technician login
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Simpan `rejectReason` jika dikirim
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Validasi `rejectReason` maksimal 1000 karakter
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Status menjadi `REJECTED`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Isi `diubahOlehTerakhir`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) DB trigger otomatis isi `waktuDitolak` / `rejectedAt`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) DB trigger otomatis insert status history
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Sudah masuk strict regression test `develop/api-smoke-test.sh` V5
 
-Planned contract:
+Contract:
 
 ```http
 PATCH /api/technicians/service-requests/{serviceRequestId}/reject
@@ -1282,7 +1439,51 @@ Request:
 
 ```json
 {
-  "reason": "Jadwal teknisi penuh"
+  "rejectReason": "Jadwal teknisi penuh"
+}
+```
+
+Success `200`:
+
+```json
+{
+  "success": true,
+  "message": "Service request rejected successfully",
+  "data": {
+    "serviceRequestId": "uuid",
+    "serviceRequestCode": "REQ-20260531-XXXXXXXX",
+    "technicianProfileId": "uuid",
+    "status": "REJECTED",
+    "rejectReason": "Jadwal teknisi penuh",
+    "acceptedAt": null,
+    "startedAt": null,
+    "completedAt": null,
+    "cancelledAt": null,
+    "rejectedAt": "2026-05-31T08:00:00Z"
+  },
+  "errors": null
+}
+```
+
+Important error cases:
+
+```json
+{
+  "success": false,
+  "message": "Service request cannot be rejected from status REJECTED",
+  "data": null,
+  "errors": null
+}
+```
+
+```json
+{
+  "success": false,
+  "message": "Validation failed",
+  "data": null,
+  "errors": {
+    "rejectReason": "Reject reason must be at most 1000 characters"
+  }
 }
 ```
 
@@ -1290,36 +1491,102 @@ Request:
 
 ## BE-54 [MVP] Technician mulai pengerjaan
 
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Endpoint: `PATCH /api/technicians/service-requests/{serviceRequestId}/start`
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Request harus `ACCEPTED`
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Hanya technician yang dipilih pada request
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Status menjadi `ON_PROGRESS`
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) DB trigger otomatis isi `waktuDiproses`
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) DB trigger otomatis insert status history
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Endpoint: `PATCH /api/technicians/service-requests/{serviceRequestId}/start`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Hanya technician login
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Customer token return `403`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Tanpa token return `401`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Validasi `serviceRequestId` harus UUID
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Jika UUID invalid return `400`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Jika request tidak ditemukan return `404`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Jika request bukan milik technician login return `404`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Request harus `ACCEPTED`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Jika request masih `WAITING`, sudah `COMPLETED`, `CANCELLED`, atau `REJECTED`, return `409`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Hanya technician yang dipilih pada request
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Status menjadi `ON_PROGRESS`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Isi `diubahOlehTerakhir`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) DB trigger otomatis isi `waktuDiproses` / `startedAt`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) DB trigger otomatis insert status history
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Sudah masuk strict regression test `develop/api-smoke-test.sh` V5
 
-Planned contract:
+Contract:
 
 ```http
 PATCH /api/technicians/service-requests/{serviceRequestId}/start
 Authorization: Bearer {technicianToken}
 ```
 
+Success `200`:
+
+```json
+{
+  "success": true,
+  "message": "Service request started successfully",
+  "data": {
+    "serviceRequestId": "uuid",
+    "serviceRequestCode": "REQ-20260531-XXXXXXXX",
+    "technicianProfileId": "uuid",
+    "status": "ON_PROGRESS",
+    "estimatedCost": null,
+    "finalCost": null,
+    "technicianNote": null,
+    "acceptedAt": "2026-05-31T08:00:00Z",
+    "startedAt": "2026-05-31T08:05:00Z",
+    "completedAt": null,
+    "cancelledAt": null,
+    "rejectedAt": null
+  },
+  "errors": null
+}
+```
+
+Important error cases:
+
+```json
+{
+  "success": false,
+  "message": "Service request cannot be started from status WAITING",
+  "data": null,
+  "errors": null
+}
+```
+
+```json
+{
+  "success": false,
+  "message": "Service request cannot be started from status COMPLETED",
+  "data": null,
+  "errors": null
+}
+```
+
 ---
 
 ## BE-55 [MVP] Technician selesaikan pengerjaan
 
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Endpoint: `PATCH /api/technicians/service-requests/{serviceRequestId}/complete`
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Request harus `ON_PROGRESS`
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Hanya technician yang dipilih pada request
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Status menjadi `COMPLETED`
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Simpan `technicianNote` jika dikirim
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Simpan `finalCost` jika dikirim
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Final cost tidak boleh negatif
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Tambah `totalJobs` technician
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) DB trigger otomatis isi `waktuSelesai`
-- ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) DB trigger otomatis insert status history
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Endpoint: `PATCH /api/technicians/service-requests/{serviceRequestId}/complete`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Hanya technician login
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Customer token return `403`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Tanpa token return `401`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Validasi `serviceRequestId` harus UUID
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Jika UUID invalid return `400`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Jika request tidak ditemukan return `404`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Jika request bukan milik technician login return `404`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Request harus `ON_PROGRESS`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Jika request masih `WAITING`, baru `ACCEPTED`, atau sudah final, return `409`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Hanya technician yang dipilih pada request
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Status menjadi `COMPLETED`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Simpan `finalCost`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `finalCost` wajib dikirim
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) `finalCost` tidak boleh negatif
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Simpan `technicianNote` jika dikirim
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Validasi `technicianNote` maksimal 1000 karakter
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Isi `diubahOlehTerakhir`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) DB trigger otomatis isi `waktuSelesai` / `completedAt`
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) DB trigger otomatis insert status history
+- ![deferred](https://img.shields.io/badge/%5Bdeferred%5D-lightgrey?style=flat-square) Increment `totalJobs` technician ditunda sampai aturan statistik/rating final
+- ![finished](https://img.shields.io/badge/%5Bfinished%5D-brightgreen?style=flat-square) Sudah masuk strict regression test `develop/api-smoke-test.sh` V5
 
-Planned contract:
+Contract:
 
 ```http
 PATCH /api/technicians/service-requests/{serviceRequestId}/complete
@@ -1331,8 +1598,74 @@ Request:
 
 ```json
 {
-  "technicianNote": "AC sudah dibersihkan dan freon dicek",
-  "finalCost": 150000
+  "finalCost": 150000,
+  "technicianNote": "AC sudah dibersihkan dan freon dicek"
+}
+```
+
+Success `200`:
+
+```json
+{
+  "success": true,
+  "message": "Service request completed successfully",
+  "data": {
+    "serviceRequestId": "uuid",
+    "serviceRequestCode": "REQ-20260531-XXXXXXXX",
+    "technicianProfileId": "uuid",
+    "status": "COMPLETED",
+    "estimatedCost": null,
+    "finalCost": 150000.00,
+    "technicianNote": "AC sudah dibersihkan dan freon dicek",
+    "acceptedAt": "2026-05-31T08:00:00Z",
+    "startedAt": "2026-05-31T08:05:00Z",
+    "completedAt": "2026-05-31T08:30:00Z",
+    "cancelledAt": null,
+    "rejectedAt": null
+  },
+  "errors": null
+}
+```
+
+Important error cases:
+
+```json
+{
+  "success": false,
+  "message": "Service request cannot be completed from status ACCEPTED",
+  "data": null,
+  "errors": null
+}
+```
+
+```json
+{
+  "success": false,
+  "message": "Invalid request body",
+  "data": null,
+  "errors": null
+}
+```
+
+```json
+{
+  "success": false,
+  "message": "Validation failed",
+  "data": null,
+  "errors": {
+    "finalCost": "Final cost is required"
+  }
+}
+```
+
+```json
+{
+  "success": false,
+  "message": "Validation failed",
+  "data": null,
+  "errors": {
+    "technicianNote": "Technician note must be at most 1000 characters"
+  }
 }
 ```
 
@@ -1383,6 +1716,8 @@ Catatan penting:
 ---
 
 ## BE-62 [NEXT] API lihat timeline status request
+
+Target next immediate setelah BE-55 selesai. Database trigger status history sudah aktif, sehingga modul ini fokus expose read API.
 
 - ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Endpoint customer: `GET /api/customers/service-requests/{serviceRequestId}/status-history`
 - ![todo](https://img.shields.io/badge/%5Btodo%5D-lightgrey?style=flat-square) Endpoint technician: `GET /api/technicians/service-requests/{serviceRequestId}/status-history`
@@ -1711,6 +2046,17 @@ GET   /api/customers/service-requests/{serviceRequestId}
 PATCH /api/customers/service-requests/{serviceRequestId}/cancel
 ```
 
+### Technician Service Request
+
+```text
+GET   /api/technicians/service-requests
+GET   /api/technicians/service-requests/{serviceRequestId}
+PATCH /api/technicians/service-requests/{serviceRequestId}/accept
+PATCH /api/technicians/service-requests/{serviceRequestId}/reject
+PATCH /api/technicians/service-requests/{serviceRequestId}/start
+PATCH /api/technicians/service-requests/{serviceRequestId}/complete
+```
+
 ---
 
 ## 12.2 Endpoint yang akan dibuat berikutnya
@@ -1725,12 +2071,6 @@ POST  /api/customers/service-requests/{serviceRequestId}/review
 ### Technician Service Request
 
 ```text
-GET   /api/technicians/service-requests
-GET   /api/technicians/service-requests/{serviceRequestId}
-PATCH /api/technicians/service-requests/{serviceRequestId}/accept
-PATCH /api/technicians/service-requests/{serviceRequestId}/reject
-PATCH /api/technicians/service-requests/{serviceRequestId}/start
-PATCH /api/technicians/service-requests/{serviceRequestId}/complete
 GET   /api/technicians/service-requests/{serviceRequestId}/status-history
 ```
 
@@ -1827,8 +2167,8 @@ bash develop/api-smoke-test.sh
 Target terakhir yang sudah tercapai:
 
 ```text
-ALL STRICT API SMOKE TESTS V2 PASSED
-Passed: 358
+ALL STRICT API SMOKE TESTS V5 PASSED
+Passed: 736
 Failed: 0
 ```
 
@@ -1842,27 +2182,32 @@ Status terakhir yang sudah selesai dan sudah masuk strict regression test:
 ✅ BE-41 Customer List Service Requests
 ✅ BE-42 Customer Detail Service Request
 ✅ BE-43 Customer Cancel Service Request
+✅ BE-50 Technician List Service Requests
+✅ BE-51 Technician Detail Service Request
+✅ BE-52 Technician Accept Request
+✅ BE-53 Technician Reject Request
+✅ BE-54 Technician Start Work
+✅ BE-55 Technician Complete Work
 ```
 
 Urutan paling aman dari posisi sekarang:
 
 ```text
-1. BE-50 Technician List Service Requests
-2. BE-51 Technician Detail Service Request
-3. BE-52 Technician Accept Request
-4. BE-53 Technician Reject Request
-5. BE-54 Technician Start Work
-6. BE-55 Technician Complete Work
-7. BE-62 Status History Read API
-8. BE-71 Technician Availability
-9. BE-80 Review Schema
-10. BE-81 Create Review
+1. BE-62 Status History Read API
+2. BE-71 Technician Availability
+3. BE-80 Review Schema
+4. BE-81 Create Review
+5. BE-82 List Review / Technician Rating Read API
+6. BE-90 Chat Schema
+7. BE-91 Chat History
+8. BE-92 WebSocket Chat
 ```
 
 Catatan:
 
-- Jangan masuk mobile/desktop flow teknisi sebelum BE-50 dan BE-51 minimal selesai.
-- Technician side harus bisa melihat order masuk dulu sebelum fitur accept/reject/start/complete dikerjakan.
+- Backend core service request technician sudah lengkap sampai status `COMPLETED`.
+- Jangan masuk review sebelum BE-62 selesai, karena review idealnya bergantung pada request yang sudah `COMPLETED` dan histori status yang jelas.
+- Jangan masuk mobile/desktop integrasi penuh sebelum endpoint status history minimal tersedia.
 - Setelah setiap endpoint baru, update `develop/api-smoke-test.sh`.
 
 ---
