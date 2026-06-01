@@ -73,19 +73,19 @@ public class KategoriAdapter extends RecyclerView.Adapter<KategoriAdapter.Katego
         }
 
         if (lower.contains("kulkas") || lower.contains("fridge") || lower.contains("refriger")) {
-            return R.drawable.ic_cat_ac;
+            return R.drawable.ic_cat_fridge;
         }
 
         if (lower.contains("cuci") || lower.contains("washing")) {
-            return R.drawable.ic_cat_default;
+            return R.drawable.ic_cat_washing_machine;
         }
 
-        if (lower.contains("oven") || lower.contains("kompor")) {
-            return R.drawable.ic_cat_tv;
+        if (lower.contains("kipas") || lower.contains("fan")) {
+            return R.drawable.ic_cat_electric_fan;
         }
 
-        if (lower.contains("laptop") || lower.contains("computer") || lower.contains("pc")) {
-            return R.drawable.ic_cat_tv;
+        if (lower.contains("rice") || lower.contains("magic") || lower.contains("cooker")) {
+            return R.drawable.ic_cat_rice_cooker;
         }
 
         return R.drawable.ic_cat_default;

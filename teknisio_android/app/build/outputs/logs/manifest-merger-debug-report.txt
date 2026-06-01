@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\Semester 4 (26)\PBO\Final Project\Teknisio\teknisio_android\app\src\main\AndroidManifest.xml:2:1-48:12
-INJECTED from D:\Semester 4 (26)\PBO\Final Project\Teknisio\teknisio_android\app\src\main\AndroidManifest.xml:2:1-48:12
-INJECTED from D:\Semester 4 (26)\PBO\Final Project\Teknisio\teknisio_android\app\src\main\AndroidManifest.xml:2:1-48:12
-INJECTED from D:\Semester 4 (26)\PBO\Final Project\Teknisio\teknisio_android\app\src\main\AndroidManifest.xml:2:1-48:12
+ADDED from D:\Semester 4 (26)\PBO\Final Project\Teknisio\teknisio_android\app\src\main\AndroidManifest.xml:2:1-52:12
+INJECTED from D:\Semester 4 (26)\PBO\Final Project\Teknisio\teknisio_android\app\src\main\AndroidManifest.xml:2:1-52:12
+INJECTED from D:\Semester 4 (26)\PBO\Final Project\Teknisio\teknisio_android\app\src\main\AndroidManifest.xml:2:1-52:12
+INJECTED from D:\Semester 4 (26)\PBO\Final Project\Teknisio\teknisio_android\app\src\main\AndroidManifest.xml:2:1-52:12
 MERGED from [com.google.android.material:material:1.11.0] D:\gradle_cache\caches\transforms-3\e5f236403c8940510f9a62128178b4ee\transformed\material-1.11.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] D:\gradle_cache\caches\transforms-3\965a83c0f44625046e985b973af174c9\transformed\constraintlayout-2.1.4\AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.appcompat:appcompat-resources:1.6.1] D:\gradle_cache\caches\transforms-3\7777969b156774a4bea6f16de47f979f\transformed\jetified-appcompat-resources-1.6.1\AndroidManifest.xml:17:1-22:12
@@ -66,8 +66,8 @@ ADDED from D:\Semester 4 (26)\PBO\Final Project\Teknisio\teknisio_android\app\sr
 	android:name
 		ADDED from D:\Semester 4 (26)\PBO\Final Project\Teknisio\teknisio_android\app\src\main\AndroidManifest.xml:5:22-76
 application
-ADDED from D:\Semester 4 (26)\PBO\Final Project\Teknisio\teknisio_android\app\src\main\AndroidManifest.xml:7:5-46:19
-INJECTED from D:\Semester 4 (26)\PBO\Final Project\Teknisio\teknisio_android\app\src\main\AndroidManifest.xml:7:5-46:19
+ADDED from D:\Semester 4 (26)\PBO\Final Project\Teknisio\teknisio_android\app\src\main\AndroidManifest.xml:7:5-50:19
+INJECTED from D:\Semester 4 (26)\PBO\Final Project\Teknisio\teknisio_android\app\src\main\AndroidManifest.xml:7:5-50:19
 MERGED from [com.google.android.material:material:1.11.0] D:\gradle_cache\caches\transforms-3\e5f236403c8940510f9a62128178b4ee\transformed\material-1.11.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.11.0] D:\gradle_cache\caches\transforms-3\e5f236403c8940510f9a62128178b4ee\transformed\material-1.11.0\AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] D:\gradle_cache\caches\transforms-3\965a83c0f44625046e985b973af174c9\transformed\constraintlayout-2.1.4\AndroidManifest.xml:9:5-20
@@ -150,6 +150,12 @@ ADDED from D:\Semester 4 (26)\PBO\Final Project\Teknisio\teknisio_android\app\sr
 		ADDED from D:\Semester 4 (26)\PBO\Final Project\Teknisio\teknisio_android\app\src\main\AndroidManifest.xml:44:13-37
 	android:name
 		ADDED from D:\Semester 4 (26)\PBO\Final Project\Teknisio\teknisio_android\app\src\main\AndroidManifest.xml:43:13-51
+activity#com.teknisio.app.ui.home.NewsDetailActivity
+ADDED from D:\Semester 4 (26)\PBO\Final Project\Teknisio\teknisio_android\app\src\main\AndroidManifest.xml:46:9-48:40
+	android:exported
+		ADDED from D:\Semester 4 (26)\PBO\Final Project\Teknisio\teknisio_android\app\src\main\AndroidManifest.xml:48:13-37
+	android:name
+		ADDED from D:\Semester 4 (26)\PBO\Final Project\Teknisio\teknisio_android\app\src\main\AndroidManifest.xml:47:13-55
 uses-sdk
 INJECTED from D:\Semester 4 (26)\PBO\Final Project\Teknisio\teknisio_android\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from D:\Semester 4 (26)\PBO\Final Project\Teknisio\teknisio_android\app\src\main\AndroidManifest.xml

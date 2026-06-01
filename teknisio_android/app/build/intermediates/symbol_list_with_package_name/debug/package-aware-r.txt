@@ -2974,6 +2974,7 @@ drawable avd_hide_password
 drawable avd_show_password
 drawable bg_back_button
 drawable bg_bottom_nav
+drawable bg_bottom_sheet
 drawable bg_btn_primary
 drawable bg_cat_icon_circle
 drawable bg_circle_icon
@@ -3375,6 +3376,7 @@ id inward
 id italic
 id item_touch_helper_previous_elevation
 id ivCategoryIcon
+id ivNewsDetailImage
 id ivNewsImage
 id ivNotification
 id ivProfile
@@ -3657,6 +3659,9 @@ id tvMoreInfo
 id tvName
 id tvNewsDate
 id tvNewsDesc
+id tvNewsDetailContent
+id tvNewsDetailDate
+id tvNewsDetailTitle
 id tvNewsTitle
 id tvPrice
 id tvPriceSmall
@@ -3811,6 +3816,7 @@ layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_login
 layout activity_main
+layout activity_news_detail
 layout activity_onboarding
 layout activity_order
 layout activity_register

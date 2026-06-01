@@ -4,6 +4,7 @@ color black
 color white
 drawable bg_back_button
 drawable bg_bottom_nav
+drawable bg_bottom_sheet
 drawable bg_btn_primary
 drawable bg_cat_icon_circle
 drawable bg_circle_icon
@@ -79,6 +80,7 @@ id footer_area
 id form_container
 id indicator_container
 id ivCategoryIcon
+id ivNewsDetailImage
 id ivNewsImage
 id ivNotification
 id ivProfile
@@ -117,6 +119,9 @@ id tvMoreInfo
 id tvName
 id tvNewsDate
 id tvNewsDesc
+id tvNewsDetailContent
+id tvNewsDetailDate
+id tvNewsDetailTitle
 id tvNewsTitle
 id tvPrice
 id tvPriceSmall
@@ -134,6 +139,7 @@ id vOverlay
 id viewPager
 layout activity_login
 layout activity_main
+layout activity_news_detail
 layout activity_onboarding
 layout activity_order
 layout activity_register

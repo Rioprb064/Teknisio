@@ -48,16 +48,16 @@
         "source": "D:\\gradle_cache\\daemon\\8.4\\com.teknisio.app-main-6:\\menu\\bottom_nav_menu.xml"
     },
     {
+        "merged": "com.teknisio.app-merged_res-4:/drawable_bg_bottom_sheet.xml.flat",
+        "source": "com.teknisio.app-main-6:/drawable/bg_bottom_sheet.xml"
+    },
+    {
         "merged": "D:\\gradle_cache\\daemon\\8.4\\com.teknisio.app-merged_res-4:\\drawable_bg_cat_icon_circle.xml.flat",
         "source": "D:\\gradle_cache\\daemon\\8.4\\com.teknisio.app-main-6:\\drawable\\bg_cat_icon_circle.xml"
     },
     {
         "merged": "D:\\gradle_cache\\daemon\\8.4\\com.teknisio.app-merged_res-4:\\layout_activity_onboarding.xml.flat",
         "source": "D:\\gradle_cache\\daemon\\8.4\\com.teknisio.app-main-6:\\layout\\activity_onboarding.xml"
-    },
-    {
-        "merged": "com.teknisio.app-merged_res-4:/layout_item_news.xml.flat",
-        "source": "com.teknisio.app-main-6:/layout/item_news.xml"
     },
     {
         "merged": "D:\\gradle_cache\\daemon\\8.4\\com.teknisio.app-merged_res-4:\\drawable_bg_news_card.xml.flat",
@@ -218,6 +218,10 @@
     {
         "merged": "D:\\gradle_cache\\daemon\\8.4\\com.teknisio.app-merged_res-4:\\layout_activity_order.xml.flat",
         "source": "D:\\gradle_cache\\daemon\\8.4\\com.teknisio.app-main-6:\\layout\\activity_order.xml"
+    },
+    {
+        "merged": "D:\\gradle_cache\\daemon\\8.4\\com.teknisio.app-merged_res-4:\\layout_activity_news_detail.xml.flat",
+        "source": "D:\\gradle_cache\\daemon\\8.4\\com.teknisio.app-main-6:\\layout\\activity_news_detail.xml"
     },
     {
         "merged": "D:\\gradle_cache\\daemon\\8.4\\com.teknisio.app-merged_res-4:\\drawable_start_3.png.flat",
