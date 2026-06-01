@@ -389,21 +389,22 @@
             android:gravity="center"
             android:layout_marginTop="32dp">
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_logout"
-                android:layout_width="115dp"
-                android:layout_height="32dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="140dp"
+                android:minHeight="48dp"
                 android:background="@drawable/bg_logout_button"
                 android:text="Log Out"
                 android:textAllCaps="false"
                 android:textColor="#FF6161"
                 android:textSize="16sp"
                 android:textStyle="normal"
-                android:paddingStart="11dp"
-                android:paddingEnd="11dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
                 android:drawableStart="@drawable/ic_logout"
-                android:drawablePadding="5dp"
-                app:backgroundTint="@null"/>
+                android:drawablePadding="8dp" />
 
         </LinearLayout>
 

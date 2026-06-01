@@ -55,6 +55,9 @@
         <activity
             android:name="com.teknisio.app.ui.order.OrderActivity"
             android:exported="false" />
+        <activity
+            android:name="com.teknisio.app.ui.home.NewsDetailActivity"
+            android:exported="false" />
 
         <provider
             android:name="androidx.startup.InitializationProvider"

@@ -1,16 +1,16 @@
-#Mon Jun 01 02:51:26 WIB 2026
-base.0=/D/KULIAH/SEMESTER 4/REGULER/Pemrograman Berbasis Object/Proyek Akhir/teknisio_android/app/build/intermediates/dex/debug/mergeExtDexDebug/classes.dex
-base.1=/D/KULIAH/SEMESTER 4/REGULER/Pemrograman Berbasis Object/Proyek Akhir/teknisio_android/app/build/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
-base.10=/D/KULIAH/SEMESTER 4/REGULER/Pemrograman Berbasis Object/Proyek Akhir/teknisio_android/app/build/intermediates/dex/debug/mergeProjectDexDebug/9/classes.dex
-base.11=/D/KULIAH/SEMESTER 4/REGULER/Pemrograman Berbasis Object/Proyek Akhir/teknisio_android/app/build/intermediates/dex/debug/mergeExtDexDebug/classes2.dex
-base.2=/D/KULIAH/SEMESTER 4/REGULER/Pemrograman Berbasis Object/Proyek Akhir/teknisio_android/app/build/intermediates/dex/debug/mergeProjectDexDebug/11/classes.dex
-base.3=/D/KULIAH/SEMESTER 4/REGULER/Pemrograman Berbasis Object/Proyek Akhir/teknisio_android/app/build/intermediates/dex/debug/mergeProjectDexDebug/14/classes.dex
-base.4=/D/KULIAH/SEMESTER 4/REGULER/Pemrograman Berbasis Object/Proyek Akhir/teknisio_android/app/build/intermediates/dex/debug/mergeProjectDexDebug/15/classes.dex
-base.5=/D/KULIAH/SEMESTER 4/REGULER/Pemrograman Berbasis Object/Proyek Akhir/teknisio_android/app/build/intermediates/dex/debug/mergeProjectDexDebug/2/classes.dex
-base.6=/D/KULIAH/SEMESTER 4/REGULER/Pemrograman Berbasis Object/Proyek Akhir/teknisio_android/app/build/intermediates/dex/debug/mergeProjectDexDebug/3/classes.dex
-base.7=/D/KULIAH/SEMESTER 4/REGULER/Pemrograman Berbasis Object/Proyek Akhir/teknisio_android/app/build/intermediates/dex/debug/mergeProjectDexDebug/5/classes.dex
-base.8=/D/KULIAH/SEMESTER 4/REGULER/Pemrograman Berbasis Object/Proyek Akhir/teknisio_android/app/build/intermediates/dex/debug/mergeProjectDexDebug/7/classes.dex
-base.9=/D/KULIAH/SEMESTER 4/REGULER/Pemrograman Berbasis Object/Proyek Akhir/teknisio_android/app/build/intermediates/dex/debug/mergeProjectDexDebug/8/classes.dex
+#Mon Jun 01 08:32:32 WIB 2026
+base.0=D\:\\Semester 4 (26)\\PBO\\Final Project\\Teknisio\\teknisio_android\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
+base.1=D\:\\Semester 4 (26)\\PBO\\Final Project\\Teknisio\\teknisio_android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
+base.10=D\:\\Semester 4 (26)\\PBO\\Final Project\\Teknisio\\teknisio_android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\9\\classes.dex
+base.11=D\:\\Semester 4 (26)\\PBO\\Final Project\\Teknisio\\teknisio_android\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes2.dex
+base.2=D\:\\Semester 4 (26)\\PBO\\Final Project\\Teknisio\\teknisio_android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\11\\classes.dex
+base.3=D\:\\Semester 4 (26)\\PBO\\Final Project\\Teknisio\\teknisio_android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\14\\classes.dex
+base.4=D\:\\Semester 4 (26)\\PBO\\Final Project\\Teknisio\\teknisio_android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\15\\classes.dex
+base.5=D\:\\Semester 4 (26)\\PBO\\Final Project\\Teknisio\\teknisio_android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\2\\classes.dex
+base.6=D\:\\Semester 4 (26)\\PBO\\Final Project\\Teknisio\\teknisio_android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\3\\classes.dex
+base.7=D\:\\Semester 4 (26)\\PBO\\Final Project\\Teknisio\\teknisio_android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\5\\classes.dex
+base.8=D\:\\Semester 4 (26)\\PBO\\Final Project\\Teknisio\\teknisio_android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\7\\classes.dex
+base.9=D\:\\Semester 4 (26)\\PBO\\Final Project\\Teknisio\\teknisio_android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\8\\classes.dex
 path.0=classes.dex
 path.1=0/classes.dex
 path.10=9/classes.dex

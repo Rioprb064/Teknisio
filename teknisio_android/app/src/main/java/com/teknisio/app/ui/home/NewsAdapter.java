@@ -7,6 +7,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.teknisio.app.R;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import java.util.List;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
@@ -15,18 +19,26 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         public String judul;
         public String deskripsi;
         public String tanggal;
+        public String imageUrl;
 
-        public NewsItem(String judul, String deskripsi, String tanggal) {
+        public NewsItem(String judul, String deskripsi, String tanggal, String imageUrl) {
             this.judul = judul;
             this.deskripsi = deskripsi;
             this.tanggal = tanggal;
+            this.imageUrl = imageUrl;
         }
     }
 
-    private final List<NewsItem> items;
+    public interface OnItemClickListener {
+        void onItemClick(NewsItem item);
+    }
 
-    public NewsAdapter(List<NewsItem> items) {
+    private final List<NewsItem> items;
+    private final OnItemClickListener listener;
+
+    public NewsAdapter(List<NewsItem> items, OnItemClickListener listener) {
         this.items = items;
+        this.listener = listener;
     }
 
     @NonNull
@@ -43,8 +55,25 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         holder.tvTitle.setText(item.judul);
         holder.tvDesc.setText(item.deskripsi);
         holder.tvDate.setText(item.tanggal);
+        
+        if (item.imageUrl != null && !item.imageUrl.isEmpty()) {
+            Glide.with(holder.itemView.getContext())
+                 .load(item.imageUrl)
+                 .apply(new RequestOptions().transform(new CenterCrop(), new RoundedCorners(16)))
+                 .placeholder(R.drawable.bg_news_thumb)
+                 .into(holder.ivNewsImage);
+        } else {
+            holder.ivNewsImage.setImageResource(R.drawable.ic_notification);
+        }
+        
         // Bottom divider: hide for last item
         holder.divider.setVisibility(position == items.size() - 1 ? View.GONE : View.VISIBLE);
+        
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onItemClick(item);
+            }
+        });
     }
 
     @Override
@@ -52,6 +81,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
     static class NewsViewHolder extends RecyclerView.ViewHolder {
         TextView tvTitle, tvDesc, tvDate;
+        android.widget.ImageView ivNewsImage;
         View divider;
 
         NewsViewHolder(@NonNull View itemView) {
@@ -59,6 +89,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             tvTitle = itemView.findViewById(R.id.tvNewsTitle);
             tvDesc = itemView.findViewById(R.id.tvNewsDesc);
             tvDate = itemView.findViewById(R.id.tvNewsDate);
+            ivNewsImage = itemView.findViewById(R.id.ivNewsImage);
             divider = itemView.findViewById(R.id.vDivider);
         }
     }
