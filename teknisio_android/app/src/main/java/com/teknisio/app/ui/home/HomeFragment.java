@@ -229,18 +229,29 @@ public class HomeFragment extends Fragment {
         List<NewsAdapter.NewsItem> newsList = new ArrayList<>();
 
         newsList.add(new NewsAdapter.NewsItem(
-                "Cara agar perabotan mu awet",
-                "Mari kita pahami bagaimana cara agar ...",
-                "2 April 2026"
+                "Cara Merawat Kulkas Agar Tetap Dingin dan Awet",
+                "Kulkas yang dirawat dengan baik tidak hanya menjaga kesegaran makanan, tapi juga hemat listrik...",
+                "15 Mei 2026",
+                "https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?q=80&w=600&auto=format&fit=crop"
         ));
 
         newsList.add(new NewsAdapter.NewsItem(
-                "Waspada arus listrik dirumah mu",
-                "Hindari tindakan ini kalau kamu ga mau...",
-                "2 April 2026"
+                "Waspada Korsleting Listrik di Rumah Anda!",
+                "Ketahui tanda-tanda awal korsleting pada peralatan elektronik untuk mencegah kebakaran...",
+                "10 Mei 2026",
+                "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?q=80&w=600&auto=format&fit=crop"
         ));
 
-        NewsAdapter newsAdapter = new NewsAdapter(newsList);
+        newsList.add(new NewsAdapter.NewsItem(
+                "Tips Memilih AC yang Tepat untuk Ruangan",
+                "Bingung memilih AC? Perhatikan ukuran PK dan luas ruangan agar tagihan listrik tidak membengkak...",
+                "5 Mei 2026",
+                "https://images.unsplash.com/photo-1527011046903-82a17db91f86?q=80&w=600&auto=format&fit=crop"
+        ));
+
+        NewsAdapter newsAdapter = new NewsAdapter(newsList, item -> {
+            Toast.makeText(requireContext(), "Membaca: " + item.judul, Toast.LENGTH_SHORT).show();
+        });
         rvNews.setAdapter(newsAdapter);
     }
 }

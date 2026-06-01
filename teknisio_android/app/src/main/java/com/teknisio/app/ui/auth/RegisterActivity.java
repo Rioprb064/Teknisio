@@ -204,7 +204,8 @@ public class RegisterActivity extends AppCompatActivity {
         setLoading(false);
 
         if (!response.isSuccessful() || response.body() == null) {
-            showError("Registrasi gagal. Email mungkin sudah terdaftar atau data tidak valid.");
+            String errorMessage = parseErrorMessage(response);
+            showError(errorMessage);
             return;
         }
 
@@ -251,6 +252,33 @@ public class RegisterActivity extends AppCompatActivity {
     private void handleFailure(Throwable t) {
         setLoading(false);
         showError("Gagal terhubung ke server: " + t.getMessage());
+    }
+
+    private String parseErrorMessage(Response<ApiResponse<AuthResponse>> response) {
+        try {
+            if (response.errorBody() != null) {
+                com.google.gson.Gson gson = new com.google.gson.Gson();
+                ApiResponse<?> errorResponse = gson.fromJson(response.errorBody().charStream(), ApiResponse.class);
+                if (errorResponse != null) {
+                    StringBuilder sb = new StringBuilder();
+                    if (errorResponse.getMessage() != null && !errorResponse.getMessage().isEmpty()) {
+                        sb.append(errorResponse.getMessage());
+                    }
+                    if (errorResponse.getErrors() != null && !errorResponse.getErrors().isEmpty()) {
+                        if (sb.length() > 0) sb.append(":\n");
+                        for (java.util.Map.Entry<String, String> entry : errorResponse.getErrors().entrySet()) {
+                            sb.append("- ").append(entry.getValue()).append("\n");
+                        }
+                    }
+                    if (sb.length() > 0) {
+                        return sb.toString().trim();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "Registrasi gagal. Email atau Nomor Telepon mungkin sudah terdaftar, atau data tidak valid.";
     }
 
     private void togglePasswordVisibility() {
